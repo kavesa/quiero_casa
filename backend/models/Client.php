@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -15,6 +15,9 @@ use Yii;
  * @property string $email
  * @property string $availability
  * @property integer $is_business
+ *
+ * @property ClientType $idClientType
+ * @property Property[] $properties
  */
 class Client extends \yii\db\ActiveRecord
 {
@@ -37,6 +40,7 @@ class Client extends \yii\db\ActiveRecord
             [['name', 'email'], 'string', 'max' => 100],
             [['phone'], 'string', 'max' => 30],
             [['availability'], 'string', 'max' => 200],
+            [['id_client_type'], 'exist', 'skipOnError' => true, 'targetClass' => ClientType::className(), 'targetAttribute' => ['id_client_type' => 'id']],
         ];
     }
 
@@ -55,5 +59,21 @@ class Client extends \yii\db\ActiveRecord
             'availability' => 'Availability',
             'is_business' => 'Is Business',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdClientType()
+    {
+        return $this->hasOne(ClientType::className(), ['id' => 'id_client_type']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProperties()
+    {
+        return $this->hasMany(Property::className(), ['id_client' => 'id']);
     }
 }

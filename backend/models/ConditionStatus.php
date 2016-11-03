@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -9,6 +9,9 @@ use Yii;
  *
  * @property integer $id
  * @property string $condition_name
+ *
+ * @property PropertyCondition[] $propertyConditions
+ * @property Property[] $idProperties
  */
 class ConditionStatus extends \yii\db\ActiveRecord
 {
@@ -40,5 +43,21 @@ class ConditionStatus extends \yii\db\ActiveRecord
             'id' => 'ID',
             'condition_name' => 'Condition Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPropertyConditions()
+    {
+        return $this->hasMany(PropertyCondition::className(), ['id_condition' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdProperties()
+    {
+        return $this->hasMany(Property::className(), ['id_property' => 'id_property'])->viaTable('property_condition', ['id_condition' => 'id']);
     }
 }

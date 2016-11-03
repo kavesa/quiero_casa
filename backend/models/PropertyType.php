@@ -1,14 +1,16 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
 /**
  * This is the model class for table "property_type".
  *
- * @property string $id
+ * @property integer $id
  * @property string $description
+ *
+ * @property Property[] $properties
  */
 class PropertyType extends \yii\db\ActiveRecord
 {
@@ -40,5 +42,13 @@ class PropertyType extends \yii\db\ActiveRecord
             'id' => 'ID',
             'description' => 'Description',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProperties()
+    {
+        return $this->hasMany(Property::className(), ['id_property_type' => 'id']);
     }
 }

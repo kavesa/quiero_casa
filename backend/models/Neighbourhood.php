@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -10,6 +10,9 @@ use Yii;
  * @property integer $id
  * @property integer $id_state
  * @property string $name
+ *
+ * @property State $idState
+ * @property Property[] $properties
  */
 class Neighbourhood extends \yii\db\ActiveRecord
 {
@@ -30,6 +33,7 @@ class Neighbourhood extends \yii\db\ActiveRecord
             [['id_state', 'name'], 'required'],
             [['id_state'], 'integer'],
             [['name'], 'string', 'max' => 100],
+            [['id_state'], 'exist', 'skipOnError' => true, 'targetClass' => State::className(), 'targetAttribute' => ['id_state' => 'id']],
         ];
     }
 
@@ -43,5 +47,21 @@ class Neighbourhood extends \yii\db\ActiveRecord
             'id_state' => 'Id State',
             'name' => 'Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdState()
+    {
+        return $this->hasOne(State::className(), ['id' => 'id_state']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProperties()
+    {
+        return $this->hasMany(Property::className(), ['id_neighborhood' => 'id']);
     }
 }

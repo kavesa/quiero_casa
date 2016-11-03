@@ -1,25 +1,26 @@
 <?php
 
-namespace backend\models;
+namespace frontend\models;
 
 use Yii;
 
 /**
- * This is the model class for table "property_image".
+ * This is the model class for table "favorite".
  *
+ * @property integer $id_user
  * @property integer $id_property
- * @property string $image
  *
  * @property Property $idProperty
+ * @property User $idUser
  */
-class PropertyImage extends \yii\db\ActiveRecord
+class Favorite extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'property_image';
+        return 'favorite';
     }
 
     /**
@@ -28,10 +29,10 @@ class PropertyImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_property', 'image'], 'required'],
-            [['id_property'], 'integer'],
-            [['image'], 'string', 'max' => 200],
+            [['id_user', 'id_property'], 'required'],
+            [['id_user', 'id_property'], 'integer'],
             [['id_property'], 'exist', 'skipOnError' => true, 'targetClass' => Property::className(), 'targetAttribute' => ['id_property' => 'id_property']],
+            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
         ];
     }
 
@@ -41,8 +42,8 @@ class PropertyImage extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id_user' => 'Id User',
             'id_property' => 'Id Property',
-            'image' => 'Image',
         ];
     }
 
@@ -52,5 +53,13 @@ class PropertyImage extends \yii\db\ActiveRecord
     public function getIdProperty()
     {
         return $this->hasOne(Property::className(), ['id_property' => 'id_property']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
 }

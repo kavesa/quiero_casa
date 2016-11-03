@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -9,6 +9,8 @@ use Yii;
  *
  * @property integer $id
  * @property string $type
+ *
+ * @property PropertyPrice[] $propertyPrices
  */
 class OperationType extends \yii\db\ActiveRecord
 {
@@ -40,5 +42,13 @@ class OperationType extends \yii\db\ActiveRecord
             'id' => 'ID',
             'type' => 'Type',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPropertyPrices()
+    {
+        return $this->hasMany(PropertyPrice::className(), ['id_operation' => 'id']);
     }
 }

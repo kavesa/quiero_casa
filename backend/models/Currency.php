@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -9,6 +9,8 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ *
+ * @property PropertyPrice[] $propertyPrices
  */
 class Currency extends \yii\db\ActiveRecord
 {
@@ -40,5 +42,13 @@ class Currency extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPropertyPrices()
+    {
+        return $this->hasMany(PropertyPrice::className(), ['id_currency' => 'id']);
     }
 }

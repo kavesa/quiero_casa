@@ -1,13 +1,13 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
 /**
  * This is the model class for table "property".
  *
- * @property integer $id
+ * @property integer $id_property
  * @property string $title
  * @property string $short_description
  * @property string $description
@@ -16,10 +16,20 @@ use Yii;
  * @property string $longitude
  * @property double $constructed_surface
  * @property double $total_surface
- * @property integer $id_state
  * @property integer $id_neighborhood
  * @property integer $id_client
  * @property integer $id_property_type
+ *
+ * @property Favorite[] $favorites
+ * @property User[] $idUsers
+ * @property Important[] $importants
+ * @property Client $idClient
+ * @property Neighbourhood $idNeighborhood
+ * @property PropertyType $idPropertyType
+ * @property PropertyCondition[] $propertyConditions
+ * @property ConditionStatus[] $idConditions
+ * @property PropertyImage[] $propertyImages
+ * @property PropertyPrice[] $propertyPrices
  */
 class Property extends \yii\db\ActiveRecord
 {
@@ -37,11 +47,14 @@ class Property extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'short_description', 'description', 'address', 'latitude', 'longitude', 'constructed_surface', 'total_surface', 'id_state', 'id_neighborhood', 'id_client', 'id_property_type'], 'required'],
+            [['title', 'short_description', 'description', 'address', 'latitude', 'longitude', 'constructed_surface', 'total_surface', 'id_neighborhood', 'id_client', 'id_property_type'], 'required'],
             [['constructed_surface', 'total_surface'], 'number'],
-            [['id_state', 'id_neighborhood', 'id_client', 'id_property_type'], 'integer'],
+            [['id_neighborhood', 'id_client', 'id_property_type'], 'integer'],
             [['title', 'short_description', 'description', 'address'], 'string', 'max' => 255],
             [['latitude', 'longitude'], 'string', 'max' => 20],
+            [['id_client'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['id_client' => 'id']],
+            [['id_neighborhood'], 'exist', 'skipOnError' => true, 'targetClass' => Neighbourhood::className(), 'targetAttribute' => ['id_neighborhood' => 'id']],
+            [['id_property_type'], 'exist', 'skipOnError' => true, 'targetClass' => PropertyType::className(), 'targetAttribute' => ['id_property_type' => 'id']],
         ];
     }
 
@@ -51,7 +64,7 @@ class Property extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id_property' => 'Id Property',
             'title' => 'Title',
             'short_description' => 'Short Description',
             'description' => 'Description',
@@ -60,10 +73,89 @@ class Property extends \yii\db\ActiveRecord
             'longitude' => 'Longitude',
             'constructed_surface' => 'Constructed Surface',
             'total_surface' => 'Total Surface',
-            'id_state' => 'Id State',
             'id_neighborhood' => 'Id Neighborhood',
             'id_client' => 'Id Client',
             'id_property_type' => 'Id Property Type',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavorites()
+    {
+        return $this->hasMany(Favorite::className(), ['id_property' => 'id_property']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'id_user'])->viaTable('favorite', ['id_property' => 'id_property']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImportants()
+    {
+        return $this->hasMany(Important::className(), ['id_property' => 'id_property']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdClient()
+    {
+        return $this->hasOne(Client::className(), ['id' => 'id_client']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdNeighborhood()
+    {
+        return $this->hasOne(Neighbourhood::className(), ['id' => 'id_neighborhood']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdPropertyType()
+    {
+        return $this->hasOne(PropertyType::className(), ['id' => 'id_property_type']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPropertyConditions()
+    {
+        return $this->hasMany(PropertyCondition::className(), ['id_property' => 'id_property']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdConditions()
+    {
+        return $this->hasMany(ConditionStatus::className(), ['id' => 'id_condition'])->viaTable('property_condition', ['id_property' => 'id_property']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPropertyImages()
+    {
+        return $this->hasMany(PropertyImage::className(), ['id_property' => 'id_property']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPropertyPrices()
+    {
+        return $this->hasMany(PropertyPrice::className(), ['id_property' => 'id_property']);
     }
 }

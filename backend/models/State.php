@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -9,6 +9,8 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ *
+ * @property Neighbourhood[] $neighbourhoods
  */
 class State extends \yii\db\ActiveRecord
 {
@@ -40,5 +42,13 @@ class State extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNeighbourhoods()
+    {
+        return $this->hasMany(Neighbourhood::className(), ['id_state' => 'id']);
     }
 }
