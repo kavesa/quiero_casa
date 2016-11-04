@@ -5,6 +5,10 @@ return [
 	    'admin' => [
 	        'class' => 'mdm\admin\Module',
 	    ],
+        'v1' => [
+            'class' => 'api\modules\v1\Module',
+            // ... other configurations for the module ...
+        ],
 	],
     'components' => [
         'cache' => [
@@ -14,7 +18,7 @@ return [
         	'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
     	],
     	'user' => [
-    		/*'class' => 'mdm\admin\models\User',*/
+    		//'class' => 'mdm\admin\models\User',
 	        'identityClass' => 'mdm\admin\models\User',
 	        'loginUrl' => ['admin/user/login'],
     	],

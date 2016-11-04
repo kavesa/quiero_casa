@@ -51,7 +51,7 @@ class Client extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_client_type' => 'Id Client Type',
+            'id_client_type' => 'Client Type',
             'name' => 'Name',
             'priority' => 'Priority',
             'phone' => 'Phone',
