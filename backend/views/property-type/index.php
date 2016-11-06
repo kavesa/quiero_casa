@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\PropertyTypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Property Types';
+$this->title = 'Tipos de propiedad';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="property-type-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Property Type', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear tipo de propiedad', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -25,7 +25,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'description',
+            [
+               'class' => 'yii\grid\DataColumn',
+               'value' => function ($data) {
+                return $data->description; 
+                },
+               'headerOptions' => ['style'=>'text-align:left'],
+               'attribute' => 'description',
+               'label' => 'Descripción'
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

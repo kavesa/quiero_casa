@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\State */
 
-$this->title = 'Update State: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'States', 'url' => ['index']];
+$this->title = 'Actualizar Departamento: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Departamentos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="state-update">
 

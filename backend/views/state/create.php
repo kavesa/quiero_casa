@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\State */
 
-$this->title = 'Create State';
-$this->params['breadcrumbs'][] = ['label' => 'States', 'url' => ['index']];
+$this->title = 'Crear Departamento';
+$this->params['breadcrumbs'][] = ['label' => 'Departamentos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="state-create">

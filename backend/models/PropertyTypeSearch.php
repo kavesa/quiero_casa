@@ -47,6 +47,7 @@ class PropertyTypeSearch extends PropertyType
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['attributes' => ['id', 'description']],
         ]);
 
         $this->load($params);
