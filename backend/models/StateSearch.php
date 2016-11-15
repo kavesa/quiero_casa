@@ -47,6 +47,7 @@ class StateSearch extends State
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['attributes' => ['id', 'name']],
         ]);
 
         $this->load($params);

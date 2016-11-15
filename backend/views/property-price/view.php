@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\PropertyPrice */
 
 $this->title = $model->id_property;
-$this->params['breadcrumbs'][] = ['label' => 'Property Prices', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Precios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="property-price-view">

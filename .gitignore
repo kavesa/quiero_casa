@@ -6,6 +6,9 @@
 # phpstorm project files
 .idea
 
+# tmp files
+-tmp
+
 # netbeans project files
 nbproject
 

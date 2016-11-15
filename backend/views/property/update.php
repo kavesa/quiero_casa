@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Property */
 
-$this->title = 'Update Property: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Properties', 'url' => ['index']];
+$this->title = 'Actualizar propiedad: ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Propiedades', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id_property]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="property-update">
 

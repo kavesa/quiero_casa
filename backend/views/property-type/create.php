@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\PropertyType */
 
-$this->title = 'Create Property Type';
-$this->params['breadcrumbs'][] = ['label' => 'Property Types', 'url' => ['index']];
+$this->title = 'Crear tipo de propiedad';
+$this->params['breadcrumbs'][] = ['label' => 'Tipos de propiedad', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="property-type-create">

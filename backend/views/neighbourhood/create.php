@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Neighbourhood */
 
-$this->title = 'Create Neighbourhood';
-$this->params['breadcrumbs'][] = ['label' => 'Neighbourhoods', 'url' => ['index']];
+$this->title = 'Crear Barrio';
+$this->params['breadcrumbs'][] = ['label' => 'Barrios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="neighbourhood-create">
