@@ -47,4 +47,5 @@ return [
         */
     ],
     'params' => $params,
+    'language' => 'es_ES',
 ];

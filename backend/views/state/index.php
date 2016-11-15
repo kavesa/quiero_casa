@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\StateSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'States';
+$this->title = 'Departamentos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="state-index">
@@ -16,16 +16,23 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create State', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Departamento', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
+            
             'id',
-            'name',
+            [
+               'class' => 'yii\grid\DataColumn',
+               'value' => function ($data) {
+                return $data->name; 
+                },
+               'headerOptions' => ['style'=>'text-align:left'],
+               'attribute' => 'name',
+               'label' => 'Nombre'
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

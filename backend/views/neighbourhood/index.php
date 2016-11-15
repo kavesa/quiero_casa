@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\NeighbourhoodSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Neighbourhoods';
+$this->title = 'Barrios';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="neighbourhood-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Neighbourhood', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Barrio', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
