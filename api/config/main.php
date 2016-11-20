@@ -22,7 +22,7 @@ return [
             'tokenParamName' => 'accessToken',
             'tokenAccessLifetime' => 3600 * 24,
             'storageMap' => [
-                'user_credentials' => 'app\models\User',
+                'user_credentials' => 'common\models\User',
             ],
             'grantTypes' => [
                 'user_credentials' => [
@@ -55,6 +55,7 @@ return [
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                'POST /oauth2/<action:\w+>' => 'oauth2/default/<action>',
                 //['class' => 'yii\rest\UrlRule', 'controller' => 'autos'],
                 // CRUD Controllers
                 'HEAD <apiv:v\d+>/<controller:\w+>'              => '<apiv>/<controller>/index',
