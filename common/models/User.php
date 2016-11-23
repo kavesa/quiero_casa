@@ -99,7 +99,6 @@ class User extends ActiveRecord implements \OAuth2\Storage\UserCredentialsInterf
         return ['user_id' => $user->getId()];
     }
 
-
     /**
      * Finds user by username
      *

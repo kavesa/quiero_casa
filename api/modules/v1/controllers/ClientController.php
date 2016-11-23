@@ -11,14 +11,15 @@ class ClientController extends ActiveController
     public function behaviors()
     {
         return [
-            /** 
-             * Performs authorization by token
-             */
+            // 
+            //  Performs authorization by token
             'tokenAuth' => [
                 'class' => \conquer\oauth2\TokenAuth::className(),
+                'only' => ['jp'], //solo para la accion jp :P
             ],
         ];
     }
+
     /**
      * Returns username and email
      */
