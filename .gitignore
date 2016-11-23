@@ -36,3 +36,5 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
+
+/api/runtime
