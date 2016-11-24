@@ -24,11 +24,12 @@ require '../../vendor/autoload.php';
  */
 class PropertyController extends Controller
 {
+
+    public $modelId;
+
     /**
      * @inheritdoc
      */
-
-
     public function behaviors()
     {
         return [
@@ -41,6 +42,7 @@ class PropertyController extends Controller
         ];
     }
 
+    
     /**
      * Lists all Property models.
      * @return mixed
@@ -78,6 +80,25 @@ class PropertyController extends Controller
         $model = new Property();
 
         if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                $this->modelId = $model->id_property;
+            }
+            return $this->redirect(['view', 'id' => $model->id_property]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function afterAction($action, $result) {
+        $result = parent::afterAction($action, $result);
+        // your custom code here
+        $model = new Property();
+
+
+        if ($model->load(Yii::$app->request->post())) {
+            
             $images = UploadedFile::getInstances($model, 'image');
             $fileCount = count($images);
             try {
@@ -104,7 +125,7 @@ class PropertyController extends Controller
                         $images[$i]->saveAs($path);
                         $s3 -> putObject([
                             'Bucket' => $config['s3']['bucket'],
-                            'Key' => "uploads/1/{$model->filename}",
+                            'Key' => "uploads/{$this->modelId}/{$model->filename}",
                             'Body' => fopen($path, 'rb'),
                             'ACL' => 'public-read'
                         ]);
@@ -115,55 +136,7 @@ class PropertyController extends Controller
             catch (S3Exception $e) {
                 die("Error");
             }
-
-            
-            /*$model->filename = $image->name;
-            $ext = end((explode(".", $image->name)));
-            $model->avatar = Yii::$app->security->generateRandomString().".{$ext}";
-
-            $path = '../files/'. $model->avatar;
-
-            if ($model->save()) {
-                $image->saveAs($path);
-                try {
-                    $config = require('../app/config.php');
-
-                    $s3 = S3Client::factory([
-                        'credentials' => [
-                            'key' => $config['s3']['key'],
-                            'secret' => $config['s3']['secret'],
-                        ],
-                        'region' => 'us-west-2',
-                        'version' => 'latest',
-                        
-                    ]);
-                
-                    $s3 -> putObject([
-                        'Bucket' => $config['s3']['bucket'],
-                        'Key' => "uploads/{$model->filename}",
-                        'Body' => fopen($path, 'rb'),
-                        'ACL' => 'public-read'
-                    ]);
-
-                    
-                }
-                catch (S3Exception $e) {
-                    die("Error");
-                }
-
-                return $this->redirect(['view', 'id' => $model->id_property]);
-            }*/
-            return $this->redirect(['view', 'id' => $model->id_property]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
-    }
-
-    public function afterAction($action, $result) {
-        $result = parent::afterAction($action, $result);
-        // your custom code here
 
         return $result;
     }
@@ -179,6 +152,7 @@ class PropertyController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
             return $this->redirect(['view', 'id' => $model->id_property]);
         } else {
             return $this->render('update', [
