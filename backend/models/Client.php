@@ -61,6 +61,23 @@ class Client extends \yii\db\ActiveRecord
         ];
     }
 
+    public function fields()
+    {
+        return[
+            'id',
+            'client_type' => function($model) {
+                return $model->idClientType;
+            },
+            'name',
+            'priority',
+            'phone',
+            'email',
+            'availability',
+            'is_business',
+        ];
+    }
+
+
     /**
      * @return \yii\db\ActiveQuery
      */

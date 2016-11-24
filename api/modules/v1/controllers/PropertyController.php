@@ -26,21 +26,21 @@ class PropertyController extends ActiveController
 	{
 	    $result = parent::afterAction($action, $result);
 	    
-	    if(array_key_exists("0", $result))
+	    /*if(array_key_exists("0", $result))
 	    {
 	    	foreach ($result as $key => $value) {
 	    		$model = Property::findOne($result[$key]["id_property"]);
-	    		$result[$key]["neighborhood"] = $model->idNeighborhood->name;
-	    		$result[$key]["client"] = $model->idClient->name;
-	    		$result[$key]["property_type"] = $model->idPropertyType->description;
+	    		//$result[$key]["neighborhood"] = $model->idNeighborhood->name;
+	    		//$result[$key]["client"] = $model->idClient->name;
+	    		//$result[$key]["property_type"] = $model->idPropertyType->description;
 	    	}
 	    }
 	    elseif (array_key_exists("id_property", $result)) {
 	    	$model = Property::findOne($result["id_property"]);
-    		$result["neighborhood"] = $model->idNeighborhood->name;
-    		$result["client"] = $model->idClient->name;
-    		$result["property_type"] = $model->idPropertyType->description;
-	    }
+    		//$result["neighborhood"] = $model->idNeighborhood->name;
+    		//$result["client"] = $model->idClient->name;
+    		//$result["property_type"] = $model->idPropertyType->description;
+	    }*/
 	    
 	    return $result;
 	}
@@ -56,6 +56,7 @@ class PropertyController extends ActiveController
             'email' =>  $user->email,
         ];
     }
+
 }
 
 ?>

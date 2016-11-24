@@ -79,6 +79,30 @@ class Property extends \yii\db\ActiveRecord
         ];
     }
 
+    public function fields()
+    {
+        return [
+            'id_property',
+            'title',
+            'short_description',
+            'description',
+            'address',
+            'latitude',
+            'longitude',
+            'constructed_surface',
+            'total_surface',
+            'neighborhood' => function($model) {
+                return $model->idNeighborhood;
+            },
+            'client' => function($model) {
+                return $model->idClient;
+            },
+            'property_type' => function($model) {
+                return $model->idPropertyType;
+            },
+        ];
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
