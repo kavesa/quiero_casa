@@ -121,15 +121,14 @@ class PropertyController extends Controller
 
                     $path = '../files/'. $model->avatar;
 
-                    if ($model->save()) {
-                        $images[$i]->saveAs($path);
-                        $s3 -> putObject([
-                            'Bucket' => $config['s3']['bucket'],
-                            'Key' => "uploads/{$this->modelId}/{$model->filename}",
-                            'Body' => fopen($path, 'rb'),
-                            'ACL' => 'public-read'
-                        ]);
-                    }
+                    $images[$i]->saveAs($path);
+                    $s3 -> putObject([
+                        'Bucket' => $config['s3']['bucket'],
+                        'Key' => "uploads/{$this->modelId}/{$model->filename}",
+                        'Body' => fopen($path, 'rb'),
+                        'ACL' => 'public-read'
+                    ]);
+                    
 
                 }
             }
