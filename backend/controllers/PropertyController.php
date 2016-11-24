@@ -8,6 +8,16 @@ use backend\models\PropertySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use kartik\file\FileInput;
+use Aws\S3\S3Client;
+
+use Aws\S3\S3Exception;
+
+
+require '../../vendor/autoload.php';
+
+
 
 /**
  * PropertyController implements the CRUD actions for Property model.
@@ -17,6 +27,8 @@ class PropertyController extends Controller
     /**
      * @inheritdoc
      */
+
+
     public function behaviors()
     {
         return [
@@ -65,13 +77,95 @@ class PropertyController extends Controller
     {
         $model = new Property();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $images = UploadedFile::getInstances($model, 'image');
+            $fileCount = count($images);
+            try {
+                $config = require('../app/config.php');
+
+                $s3 = S3Client::factory([
+                    'credentials' => [
+                        'key' => $config['s3']['key'],
+                        'secret' => $config['s3']['secret'],
+                    ],
+                    'region' => 'us-west-2',
+                    'version' => 'latest',
+                    
+                ]);
+
+                for ($i = 0; $i < $fileCount; $i++) {
+                    $model->filename = $images[$i];
+                    $ext = end(explode(".", $model->filename));
+                    $model->avatar = Yii::$app->security->generateRandomString().".{$ext}";
+
+                    $path = '../files/'. $model->avatar;
+
+                    if ($model->save()) {
+                        $images[$i]->saveAs($path);
+                        $s3 -> putObject([
+                            'Bucket' => $config['s3']['bucket'],
+                            'Key' => "uploads/1/{$model->filename}",
+                            'Body' => fopen($path, 'rb'),
+                            'ACL' => 'public-read'
+                        ]);
+                    }
+
+                }
+            }
+            catch (S3Exception $e) {
+                die("Error");
+            }
+
+            
+            /*$model->filename = $image->name;
+            $ext = end((explode(".", $image->name)));
+            $model->avatar = Yii::$app->security->generateRandomString().".{$ext}";
+
+            $path = '../files/'. $model->avatar;
+
+            if ($model->save()) {
+                $image->saveAs($path);
+                try {
+                    $config = require('../app/config.php');
+
+                    $s3 = S3Client::factory([
+                        'credentials' => [
+                            'key' => $config['s3']['key'],
+                            'secret' => $config['s3']['secret'],
+                        ],
+                        'region' => 'us-west-2',
+                        'version' => 'latest',
+                        
+                    ]);
+                
+                    $s3 -> putObject([
+                        'Bucket' => $config['s3']['bucket'],
+                        'Key' => "uploads/{$model->filename}",
+                        'Body' => fopen($path, 'rb'),
+                        'ACL' => 'public-read'
+                    ]);
+
+                    
+                }
+                catch (S3Exception $e) {
+                    die("Error");
+                }
+
+                return $this->redirect(['view', 'id' => $model->id_property]);
+            }*/
             return $this->redirect(['view', 'id' => $model->id_property]);
         } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
         }
+    }
+
+    public function afterAction($action, $result) {
+        $result = parent::afterAction($action, $result);
+        // your custom code here
+
+        return $result;
     }
 
     /**
@@ -105,6 +199,8 @@ class PropertyController extends Controller
 
         return $this->redirect(['index']);
     }
+
+
 
     /**
      * Finds the Property model based on its primary key value.
