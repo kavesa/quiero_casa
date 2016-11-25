@@ -4,10 +4,24 @@ namespace api\modules\v1\controllers;
 
 use yii\rest\ActiveController;
 use backend\models\Property;
+use backend\models\PropertySearch;
 
 class PropertyController extends ActiveController
 {
     public $modelClass = 'backend\models\Property';
+
+    public function actions() 
+    { 
+        $actions = parent::actions();
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+        return $actions;
+    }
+
+    public function prepareDataProvider() 
+    {
+        $searchModel = new PropertySearch();    
+        return $searchModel->search(\Yii::$app->request->queryParams);
+    }
 
     public function behaviors()
     {

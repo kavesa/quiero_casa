@@ -20,7 +20,7 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "mdmsoft/yii2-admin": "~2.0",
         "conquer/oauth2": "^1.5",
-        "filsh/yii2-oauth2-server": "*"
+        "filsh/yii2-oauth2-server": "*",
 		"aws/aws-sdk-php": "2.7.*"
     },
     "require-dev": {
