@@ -18,7 +18,7 @@ return [
         	'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
     	],
     	'user' => [
-    		//'class' => 'mdm\admin\models\User',
+    		//'class' => 'common\models\User',
 	        'identityClass' => 'mdm\admin\models\User',
 	        'loginUrl' => ['admin/user/login'],
     	],
