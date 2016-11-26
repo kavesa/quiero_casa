@@ -39,6 +39,17 @@ use kartik\file\FileInput;
 
     <?= $form->field($model, 'total_surface')->textInput() ?>
 
+    <?= $form->field($model, 'bedrooms')->textInput() ?>
+    <?= $form->field($model, 'bathrooms')->textInput() ?>
+    <?= $form->field($model, 'laundry')->textInput() ?>
+    <?= $form->field($model, 'barbacoa')->textInput() ?>
+    <?= $form->field($model, 'garage')->textInput() ?>
+    <?= $form->field($model, 'backyard')->textInput() ?>
+    <?= $form->field($model, 'frontyard')->textInput() ?>
+    <?= $form->field($model, 'swimmingpool')->textInput() ?>
+    <?= $form->field($model, 'guesthouse')->textInput() ?>
+    
+
     <?= $form->field($model, 'id_neighborhood')->dropDownList(ArrayHelper::map(Neighbourhood::find()->all(), 'id', 'name'))->label('Barrio')  ?>
 
     <?= $form->field($model, 'id_client')->dropDownList(ArrayHelper::map(Client::find()->all(), 'id', 'name'))->label('Cliente')  ?>
