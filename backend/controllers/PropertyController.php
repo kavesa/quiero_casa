@@ -117,8 +117,10 @@ class PropertyController extends Controller
 
                 for ($i = 0; $i < $fileCount; $i++) {
                     $imageModel = new PropertyImage();
-                    $model->filename = $images[$i];
-                    $ext = end(explode(".", $model->filename));
+                    $model->filename = $images[$i]->name;
+                    $tmpext = explode('.', $model->filename);
+                    $ext = end($tmpext);
+
                     $model->avatar = Yii::$app->security->generateRandomString().".{$ext}";
 
                     $path = '../files/'. $model->avatar;

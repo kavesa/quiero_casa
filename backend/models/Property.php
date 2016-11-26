@@ -138,6 +138,26 @@ class Property extends \yii\db\ActiveRecord
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+
+            $this->bedrooms = (!$this->bedrooms?0:$this->bedrooms);
+            $this->bathrooms = (!$this->bathrooms?0:$this->bathrooms);
+            $this->laundry = (!$this->laundry?0:$this->laundry);
+            $this->barbacoa = (!$this->barbacoa?0:$this->barbacoa);
+            $this->garage = (!$this->garage?0:$this->garage);
+            $this->backyard = (!$this->backyard?0:$this->backyard);
+            $this->frontyard = (!$this->frontyard?0:$this->frontyard);
+            $this->swimmingpool = (!$this->swimmingpool?0:$this->swimmingpool);
+            $this->guesthouse = (!$this->guesthouse?0:$this->guesthouse);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
