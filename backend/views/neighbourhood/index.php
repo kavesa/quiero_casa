@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use backend\models\State;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\NeighbourhoodSearch */
@@ -25,7 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'id_state',
+            ['attribute'=>'id_state'
+            ,'value'=>function($model){return $model->idState->name;}
+            ,'filter'=>ArrayHelper::map(State::find()->orderBy('name')->asArray()->all(), 'id', 'name'),],
+
             'name',
 
             ['class' => 'yii\grid\ActionColumn'],
