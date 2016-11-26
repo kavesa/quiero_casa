@@ -7,6 +7,7 @@ use backend\models\Neighbourhood;
 use backend\models\Client;
 use backend\models\PropertyType;
 use backend\widgets\FileUpload;
+use kartik\checkbox\CheckboxX;
 
 use kartik\file\FileInput;
 /* @var $this yii\web\View */
@@ -41,14 +42,104 @@ use kartik\file\FileInput;
 
     <?= $form->field($model, 'bedrooms')->textInput() ?>
     <?= $form->field($model, 'bathrooms')->textInput() ?>
-    <?= $form->field($model, 'laundry')->textInput() ?>
-    <?= $form->field($model, 'barbacoa')->textInput() ?>
-    <?= $form->field($model, 'garage')->textInput() ?>
-    <?= $form->field($model, 'backyard')->textInput() ?>
-    <?= $form->field($model, 'frontyard')->textInput() ?>
-    <?= $form->field($model, 'swimmingpool')->textInput() ?>
-    <?= $form->field($model, 'guesthouse')->textInput() ?>
-    
+
+    <label class="control-label" for="laundry">Lavandería</label>
+
+    <?= CheckboxX::widget([
+        'model' => $model,
+        'attribute' => 'laundry',
+        'name' => 'laundry',
+        'pluginOptions' => [
+            'threeState' => false,
+            'size' => 'lg'
+        ],
+        'pluginLoading' => false,
+    ]); 
+    ?>
+
+    <label class="control-label" for="barbacoa">Barbacoa</label>
+
+    <?= CheckboxX::widget([
+        'model' => $model,
+        'attribute' => 'barbacoa',
+        'name' => 'barbacoa',
+        'pluginOptions' => [
+            'threeState' => false,
+            'size' => 'lg'
+        ],
+        'pluginLoading' => false,
+    ]); 
+    ?>
+
+    <label class="control-label" for="garage">Garage</label>
+
+    <?= CheckboxX::widget([
+        'model' => $model,
+        'attribute' => 'garage',
+        'name' => 'garage',
+        'pluginOptions' => [
+            'threeState' => false,
+            'size' => 'lg'
+        ],
+        'pluginLoading' => false,
+    ]); 
+    ?>
+
+    <label class="control-label" for="backyard">Patio trasero</label>
+
+    <?= CheckboxX::widget([
+        'model' => $model,
+        'attribute' => 'backyard',
+        'name' => 'backyard',
+        'pluginOptions' => [
+            'threeState' => false,
+            'size' => 'lg'
+        ],
+        'pluginLoading' => false,
+    ]); 
+    ?>
+
+    <label class="control-label" for="frontyard">Patio delantero</label>
+
+    <?= CheckboxX::widget([
+        'model' => $model,
+        'attribute' => 'frontyard',
+        'name' => 'frontyard',
+        'pluginOptions' => [
+            'threeState' => false,
+            'size' => 'lg'
+        ],
+        'pluginLoading' => false,
+    ]); 
+    ?>
+
+    <label class="control-label" for="swimmingpool">Piscina</label>
+
+    <?= CheckboxX::widget([
+        'model' => $model,
+        'attribute' => 'swimmingpool',
+        'name' => 'swimmingpool',
+        'pluginOptions' => [
+            'threeState' => false,
+            'size' => 'lg'
+        ],
+        'pluginLoading' => false,
+    ]); 
+    ?>
+
+    <label class="control-label" for="guesthouse">Casa de huespedes</label>
+
+    <?= CheckboxX::widget([
+        'model' => $model,
+        'attribute' => 'guesthouse',
+        'name' => 'guesthouse',
+        'pluginOptions' => [
+            'threeState' => false,
+            'size' => 'lg'
+        ],
+        'pluginLoading' => false,
+    ]); 
+    ?>
 
     <?= $form->field($model, 'id_neighborhood')->dropDownList(ArrayHelper::map(Neighbourhood::find()->all(), 'id', 'name'))->label('Barrio')  ?>
 
