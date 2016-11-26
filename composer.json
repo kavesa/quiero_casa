@@ -22,6 +22,9 @@
         "conquer/oauth2": "^1.5",
         "filsh/yii2-oauth2-server": "*",
 		"aws/aws-sdk-php": "2.7.*"
+        "aws/aws-sdk-php": "^3.19",
+        "kartik-v/yii2-widget-fileinput": "^1.0",
+        "kartik-v/yii2-checkbox-x": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
