@@ -135,6 +135,9 @@ class Property extends \yii\db\ActiveRecord
             'frontyard',
             'swimmingpool',
             'guesthouse',
+            'images' => function($model) {
+                return $model->propertyImages;
+            },
         ];
     }
 
