@@ -50,7 +50,9 @@ class PropertySearch extends Property
             'query' => $query,
         ]);
 
-        $this->load($params);
+        //var_dump($this->id_property_type);die;
+
+        $this->load($params, '');
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails

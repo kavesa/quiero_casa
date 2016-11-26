@@ -4,10 +4,24 @@ namespace api\modules\v1\controllers;
 
 use yii\rest\ActiveController;
 use backend\models\Property;
+use backend\models\PropertySearch;
 
 class PropertyController extends ActiveController
 {
     public $modelClass = 'backend\models\Property';
+
+    public function actions() 
+    { 
+        $actions = parent::actions();
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+        return $actions;
+    }
+
+    public function prepareDataProvider() 
+    {
+        $searchModel = new PropertySearch();    
+        return $searchModel->search(\Yii::$app->request->queryParams);
+    }
 
     public function behaviors()
     {
@@ -26,21 +40,21 @@ class PropertyController extends ActiveController
 	{
 	    $result = parent::afterAction($action, $result);
 	    
-	    if(array_key_exists("0", $result))
+	    /*if(array_key_exists("0", $result))
 	    {
 	    	foreach ($result as $key => $value) {
 	    		$model = Property::findOne($result[$key]["id_property"]);
-	    		$result[$key]["neighborhood"] = $model->idNeighborhood->name;
-	    		$result[$key]["client"] = $model->idClient->name;
-	    		$result[$key]["property_type"] = $model->idPropertyType->description;
+	    		//$result[$key]["neighborhood"] = $model->idNeighborhood->name;
+	    		//$result[$key]["client"] = $model->idClient->name;
+	    		//$result[$key]["property_type"] = $model->idPropertyType->description;
 	    	}
 	    }
 	    elseif (array_key_exists("id_property", $result)) {
 	    	$model = Property::findOne($result["id_property"]);
-    		$result["neighborhood"] = $model->idNeighborhood->name;
-    		$result["client"] = $model->idClient->name;
-    		$result["property_type"] = $model->idPropertyType->description;
-	    }
+    		//$result["neighborhood"] = $model->idNeighborhood->name;
+    		//$result["client"] = $model->idClient->name;
+    		//$result["property_type"] = $model->idPropertyType->description;
+	    }*/
 	    
 	    return $result;
 	}
@@ -56,6 +70,7 @@ class PropertyController extends ActiveController
             'email' =>  $user->email,
         ];
     }
+
 }
 
 ?>

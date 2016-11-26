@@ -19,6 +19,15 @@ use Yii;
  * @property integer $id_neighborhood
  * @property integer $id_client
  * @property integer $id_property_type
+ * @property integer $bedrooms
+ * @property integer $bathrooms
+ * @property integer $laundry
+ * @property integer $barbacoa
+ * @property integer $garage
+ * @property integer $backyard
+ * @property integer $frontyard
+ * @property integer $swimmingpool
+ * @property integer $guesthouse
  *
  * @property Favorite[] $favorites
  * @property User[] $idUsers
@@ -49,7 +58,7 @@ class Property extends \yii\db\ActiveRecord
         return [
             [['title', 'short_description', 'description', 'address', 'latitude', 'longitude', 'constructed_surface', 'total_surface', 'id_neighborhood', 'id_client', 'id_property_type'], 'required'],
             [['constructed_surface', 'total_surface'], 'number'],
-            [['id_neighborhood', 'id_client', 'id_property_type'], 'integer'],
+            [['id_neighborhood', 'id_client', 'id_property_type', 'bedrooms', 'bathrooms', 'laundry', 'barbacoa', 'garage', 'backyard', 'frontyard', 'swimmingpool', 'guesthouse'], 'integer'],
             [['title', 'short_description', 'description', 'address'], 'string', 'max' => 255],
             [['latitude', 'longitude'], 'string', 'max' => 20],
             [['id_client'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['id_client' => 'id']],
@@ -76,6 +85,48 @@ class Property extends \yii\db\ActiveRecord
             'id_neighborhood' => 'Id Neighborhood',
             'id_client' => 'Id Client',
             'id_property_type' => 'Id Property Type',
+            'bedrooms' => 'Bedrooms',
+            'bathrooms' => 'Bathrooms',
+            'laundry' => 'Laundry',
+            'barbacoa' => 'Barbacoa',
+            'garage' => 'Garage',
+            'backyard' => 'Backyard',
+            'frontyard' => 'Front Yard',
+            'swimmingpool' => 'Swimming Pool',
+            'guesthouse' => 'Guest House',
+        ];
+    }
+
+    public function fields()
+    {
+        return [
+            'id_property',
+            'title',
+            'short_description',
+            'description',
+            'address',
+            'latitude',
+            'longitude',
+            'constructed_surface',
+            'total_surface',
+            'neighborhood' => function($model) {
+                return $model->idNeighborhood;
+            },
+            'client' => function($model) {
+                return $model->idClient;
+            },
+            'property_type' => function($model) {
+                return $model->idPropertyType;
+            },
+            'bedrooms',
+            'bathrooms',
+            'laundry',
+            'barbacoa',
+            'garage',
+            'backyard',
+            'frontyard',
+            'swimmingpool',
+            'guesthouse',
         ];
     }
 
