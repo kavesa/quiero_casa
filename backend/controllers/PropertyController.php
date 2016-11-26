@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Property;
 use backend\models\PropertySearch;
+use backend\models\PropertyImage;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -95,7 +96,7 @@ class PropertyController extends Controller
         $result = parent::afterAction($action, $result);
         // your custom code here
         $model = new Property();
-
+        
 
         if ($model->load(Yii::$app->request->post())) {
             
@@ -115,6 +116,7 @@ class PropertyController extends Controller
                 ]);
 
                 for ($i = 0; $i < $fileCount; $i++) {
+                    $imageModel = new PropertyImage();
                     $model->filename = $images[$i];
                     $ext = end(explode(".", $model->filename));
                     $model->avatar = Yii::$app->security->generateRandomString().".{$ext}";
@@ -128,8 +130,9 @@ class PropertyController extends Controller
                         'Body' => fopen($path, 'rb'),
                         'ACL' => 'public-read'
                     ]);
-                    
-
+                    $imageModel->image = "uploads/{$this->modelId}/{$model->filename}";
+                    $imageModel->id_property = "{$this->modelId}";
+                    $imageModel->save();
                 }
             }
             catch (S3Exception $e) {

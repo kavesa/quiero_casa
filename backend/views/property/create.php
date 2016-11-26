@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Property */
 
-$this->title = 'Create Property';
-$this->params['breadcrumbs'][] = ['label' => 'Properties', 'url' => ['index']];
+$this->title = 'Crear Propiedad';
+$this->params['breadcrumbs'][] = ['label' => 'Propiedades', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="property-create">

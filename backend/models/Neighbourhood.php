@@ -44,19 +44,8 @@ class Neighbourhood extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_state' => 'Id State',
-            'name' => 'Name',
-        ];
-    }
-
-     public function fields()
-    {
-        return[
-            'id',
-            'id_state' => function($model) {
-                return $model->idState;
-            },
-            'name'
+            'id_state' => 'Departamento',
+            'name' => 'Nombre',
         ];
     }
 
