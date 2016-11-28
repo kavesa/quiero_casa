@@ -3,11 +3,11 @@
 namespace api\modules\v1\controllers;
 
 use yii\rest\ActiveController;
-use backend\models\NeighbourhoodSearch;
+use backend\models\StateSearch;
 
-class NeighbourhoodController extends ActiveController
+class StateController extends ActiveController
 {
-    public $modelClass = 'backend\models\Neighbourhood';
+    public $modelClass = 'backend\models\State';
 
 	public function actions() 
     { 
@@ -18,7 +18,7 @@ class NeighbourhoodController extends ActiveController
 
     public function prepareDataProvider() 
     {
-        $searchModel = new NeighbourhoodSearch();    
+        $searchModel = new StateSearch();    
         return $searchModel->search(\Yii::$app->request->queryParams);
     }
 
@@ -29,20 +29,9 @@ class NeighbourhoodController extends ActiveController
             //  Performs authorization by token
             'tokenAuth' => [
                 'class' => \conquer\oauth2\TokenAuth::className(),
-                'only' => ['create', 'update', 'delete'], //solo para la accion jp :P
+                'only' => ['create', 'update', 'delete'],
             ],
         ];
     }
 
-    /**
-     * Returns username and email
-     */
-    /*public function actionIndex()
-    {
-        $user = \Yii::$app->user->identity;
-        return [
-            'username' => $user->username,
-            'email' =>  $user->email,
-        ];
-    }*/
 }
