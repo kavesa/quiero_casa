@@ -4,9 +4,9 @@ namespace api\modules\v1\controllers;
 
 use yii\rest\ActiveController;
 
-class ClientController extends ActiveController
+class NeighbourhoodController extends ActiveController
 {
-    public $modelClass = 'backend\models\Client';
+    public $modelClass = 'backend\models\Neighbourhood';
 
     public function behaviors()
     {
@@ -15,7 +15,7 @@ class ClientController extends ActiveController
             //  Performs authorization by token
             'tokenAuth' => [
                 'class' => \conquer\oauth2\TokenAuth::className(),
-                'only' => ['jp'], //solo para la accion jp :P
+                'only' => ['create', 'update', 'delete'], //solo para la accion jp :P
             ],
         ];
     }
