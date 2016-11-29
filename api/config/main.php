@@ -66,6 +66,7 @@ return [
                 'PUT <apiv:v\d+>/<controller:\w+>/<id:(\d)+>'    => '<apiv>/<controller>/update',
                 'PATCH <apiv:v\d+>/<controller:\w+>/<id:(\d)+>'  => '<apiv>/<controller>/update',
                 'DELETE <apiv:v\d+>/<controller:\w+>/<id:(\d)+>' => '<apiv>/<controller>/delete',  
+                //'POST <apiv:v\d+>/user' => '<apiv>/user/create',
             ],
         ],
     ],
