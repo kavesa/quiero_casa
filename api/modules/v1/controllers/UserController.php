@@ -59,14 +59,14 @@ class UserController extends ActiveController
         }
 
         $model['username'] = $body['username'];
-        $model['email'] = $body['email'];
+        $model['email'] = $body['username'];
         $model['password'] = $body['password'];
         
         if ($user = $model->signup()) {
             $result = array('username' => $user->username,
                             'userid' => $user->id);
             
-            $user = User::findByUsername($body['email']);
+            $user = User::findByUsername($body['username']);
         }
 
         $response = Yii::$app->response;
