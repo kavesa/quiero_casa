@@ -48,9 +48,8 @@ class PropertySearch extends Property
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => false,
         ]);
-
-        //var_dump($this->id_property_type);die;
 
         $this->load($params, '');
 
@@ -76,6 +75,9 @@ class PropertySearch extends Property
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'latitude', $this->latitude])
             ->andFilterWhere(['like', 'longitude', $this->longitude]);
+
+        $query->limit($params['limit']);
+        $query->offset($params['offset']);
 
         return $dataProvider;
     }

@@ -13,6 +13,7 @@ class PropertyController extends ActiveController
     public function actions() 
     { 
         $actions = parent::actions();
+        //unset($actions['index']);
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
         return $actions;
     }
@@ -30,47 +31,18 @@ class PropertyController extends ActiveController
             //  Performs authorization by token
             'tokenAuth' => [
                 'class' => \conquer\oauth2\TokenAuth::className(),
-                'only' => ['jp'], //solo para la accion jp :P
+                'only' => ['create', 'update', 'delete'], //solo para la accion jp :P
             ],
         ];
     }
 
-    //Para modificar el array que se devuelve, agregando los atributos foraneos de forma textual
-    public function afterAction($action, $result)
-	{
-	    $result = parent::afterAction($action, $result);
-	    
-	    /*if(array_key_exists("0", $result))
-	    {
-	    	foreach ($result as $key => $value) {
-	    		$model = Property::findOne($result[$key]["id_property"]);
-	    		//$result[$key]["neighborhood"] = $model->idNeighborhood->name;
-	    		//$result[$key]["client"] = $model->idClient->name;
-	    		//$result[$key]["property_type"] = $model->idPropertyType->description;
-	    	}
-	    }
-	    elseif (array_key_exists("id_property", $result)) {
-	    	$model = Property::findOne($result["id_property"]);
-    		//$result["neighborhood"] = $model->idNeighborhood->name;
-    		//$result["client"] = $model->idClient->name;
-    		//$result["property_type"] = $model->idPropertyType->description;
-	    }*/
-	    
-	    return $result;
-	}
-
-    /**
-     * Returns username and email
-     */
-    public function actionIndex()
+    /*public function actionIndex()
     {
-        $user = \Yii::$app->user->identity;
-        return [
-            'username' => $user->username,
-            'email' =>  $user->email,
-        ];
-    }
+        $result = Property::find()
+            ->limit()
+            ->all();
+
+        return $result;
+    }*/
 
 }
-
-?>
