@@ -4,6 +4,7 @@ namespace api\modules\v1\controllers;
 
 use yii\rest\ActiveController;
 use backend\models\Property;
+use backend\models\Important;
 
 class ImportantController extends ActiveController
 {
@@ -21,22 +22,20 @@ class ImportantController extends ActiveController
         ];
     }
 
-    public function afterAction($action, $result)
-	{
-	    $result = parent::afterAction($action, $result);
-		//$user = \Yii::$app->user->identity;
-        
-        /*foreach ($result as $key => $value) {
-        	if($result[$key]["id_user"] != $user->id) {
-        		unset($result[$key]);
-        	}
-        }*/
+    public function actions() 
+    { 
+        $actions = parent::actions();
+        unset($actions['index']);
+        return $actions;
+    }
 
-        foreach ($result as $key => $value) {
-        	$model = Property::findOne($result[$key]["id_property"]);
-        	$result[$key]["property"] = $model;
-        }
-	    
-	    return $result;
-	}
+    public function actionIndex()
+    {
+        $result = Important::find()
+            ->where(['and', 'start_date <= now()', 'end_date > now()'])
+            ->all();
+
+        return $result;
+    }
+
 }

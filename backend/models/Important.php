@@ -50,6 +50,16 @@ class Important extends \yii\db\ActiveRecord
         ];
     }
 
+    public function fields()
+    {
+        return [
+            'id',
+            'property' => function($model) {
+                return $model->idProperty;
+            },
+        ];
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

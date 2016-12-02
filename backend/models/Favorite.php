@@ -36,6 +36,10 @@ class Favorite extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function primaryKey(){
+        return array('id_user', 'id_property');
+    }
+
     /**
      * @inheritdoc
      */
