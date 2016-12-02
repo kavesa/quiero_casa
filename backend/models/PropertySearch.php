@@ -76,8 +76,38 @@ class PropertySearch extends Property
             ->andFilterWhere(['like', 'latitude', $this->latitude])
             ->andFilterWhere(['like', 'longitude', $this->longitude]);
 
-        $query->limit($params['limit']);
-        $query->offset($params['offset']);
+        if(isset($params['location']))
+        {
+            $location = explode(';', $params['location']);
+            $lat = $location[0];
+            $lng = $location[1];
+            $distance = isset($params['distance'])? $params['distance'] : 1; //si no recibo distance, lo seteo en 1km
+
+            //var_dump($lat.' '.$lng.' '.$distance);die;
+            $connection = Yii::$app->getDb();
+            $command = $connection->createCommand('
+            SELECT id_property, title, latitude, longitude, (6371 * acos(cos(radians('.$lat.')) * cos(radians( latitude ) ) 
+                        * cos( radians( longitude ) - radians('.$lng.') ) + sin( radians('.$lat.') ) * sin(radians(latitude)) ) ) AS distance 
+                        FROM property 
+                        HAVING distance < '.$distance.' 
+                        ORDER BY distance 
+                        LIMIT 0 , 20;');
+            $result = $command->queryAll();
+
+            return $result;
+
+            //var_dump($result);die;
+        }
+
+        if(isset($params['limit']))
+        {
+            $query->limit($params['limit']);
+        }
+
+        if(isset($params['offset']))
+        {
+            $query->offset($params['offset']);
+        }
 
         return $dataProvider;
     }

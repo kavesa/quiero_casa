@@ -31,18 +31,9 @@ class PropertyController extends ActiveController
             //  Performs authorization by token
             'tokenAuth' => [
                 'class' => \conquer\oauth2\TokenAuth::className(),
-                'only' => ['create', 'update', 'delete'], //solo para la accion jp :P
+                'only' => ['create', 'update', 'delete'], 
             ],
         ];
     }
-
-    /*public function actionIndex()
-    {
-        $result = Property::find()
-            ->limit()
-            ->all();
-
-        return $result;
-    }*/
 
 }
