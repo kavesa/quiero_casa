@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;    
 use backend\models\Neighbourhood;
+use backend\models\ConditionStatus;
 use backend\models\Client;
 use backend\models\PropertyType;
 use backend\widgets\FileUpload;
@@ -41,6 +42,7 @@ use kartik\file\FileInput;
     <?= $form->field($model, 'total_surface')->textInput() ?>
 
     <?= $form->field($model, 'bedrooms')->textInput() ?>
+    
     <?= $form->field($model, 'bathrooms')->textInput() ?>
 
     <label class="control-label" for="laundry">Lavandería</label>
@@ -153,6 +155,7 @@ use kartik\file\FileInput;
         'pluginOptions'=>['allowedFileExtensions'=>['jpg','gif','png']
     ]]); ?>
 
+    <?= $form->field($model, 'propertyConditions')->dropDownList(ArrayHelper::map(ConditionStatus::find()->all(), 'id', 'condition_name'))->label('Condición de propiedad')  ?>
     
 
     <div class="form-group">

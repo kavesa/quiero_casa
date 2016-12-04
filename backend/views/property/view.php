@@ -40,7 +40,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_neighborhood',
             'id_client',
             'id_property_type',
+            'bedrooms',
+            'bathrooms',
+            'laundry',
+            'barbacoa',
+            'garage',
+            'backyard',
+            'frontyard',
+            'swimmingpool',
+            'guesthouse',
         ],
     ]) ?>
+
 
 </div>

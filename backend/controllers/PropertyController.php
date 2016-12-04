@@ -6,6 +6,7 @@ use Yii;
 use backend\models\Property;
 use backend\models\PropertySearch;
 use backend\models\PropertyImage;
+use backend\models\PropertyCondition;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -82,6 +83,14 @@ class PropertyController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
+                $condition = new PropertyCondition();
+                $condition->id_property = $model->id_property;
+                $condition->id_condition = $model->condition;
+                $condition->save();
+
+                $model->link('propertyConditions', $condition);
+                
+
                 $this->modelId = $model->id_property;
             }
             return $this->redirect(['view', 'id' => $model->id_property]);
@@ -91,6 +100,7 @@ class PropertyController extends Controller
             ]);
         }
     }
+
 
     public function afterAction($action, $result) {
         $result = parent::afterAction($action, $result);
@@ -117,10 +127,8 @@ class PropertyController extends Controller
 
                 for ($i = 0; $i < $fileCount; $i++) {
                     $imageModel = new PropertyImage();
-                    $model->filename = $images[$i]->name;
-                    $tmpext = explode('.', $model->filename);
-                    $ext = end($tmpext);
-
+                    $model->filename = $images[$i];
+                    $ext = end(explode(".", $model->filename));
                     $model->avatar = Yii::$app->security->generateRandomString().".{$ext}";
 
                     $path = '../files/'. $model->avatar;

@@ -47,7 +47,7 @@ class Property extends \yii\db\ActiveRecord
 
     public $image;
     public $filename;
-
+    public $condition;
     public $avatar;
 
     /**
@@ -64,7 +64,7 @@ class Property extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'short_description', 'description', 'address', 'latitude', 'longitude', 'constructed_surface', 'total_surface', 'id_neighborhood', 'id_client', 'id_property_type'], 'required'],
+            [['title', 'short_description', 'description', 'address', 'latitude', 'longitude', 'constructed_surface', 'total_surface', 'id_neighborhood', 'id_client', 'id_property_type', 'bedrooms', 'bathrooms'], 'required'],
             [['constructed_surface', 'total_surface'], 'number'],
             [['id_neighborhood', 'id_client', 'id_property_type', 'bedrooms', 'bathrooms', 'laundry', 'barbacoa', 'garage', 'backyard', 'frontyard', 'swimmingpool', 'guesthouse'], 'integer'],
             [['title', 'short_description', 'description', 'address'], 'string', 'max' => 255],
@@ -102,6 +102,7 @@ class Property extends \yii\db\ActiveRecord
             'frontyard' => 'Front Yard',
             'swimmingpool' => 'Swimming Pool',
             'guesthouse' => 'Guest House',
+            'id_condition' => 'Condicion',
         ];
     }
 
@@ -135,8 +136,11 @@ class Property extends \yii\db\ActiveRecord
             'frontyard',
             'swimmingpool',
             'guesthouse',
-            'images' => function($model) {
-                return $model->propertyImages;
+            'condition_status' => function($model) {
+                return $model->idConditions;
+            },
+            'property_condition' => function($model) {
+                return $model->idPropertyCondition;
             },
         ];
     }

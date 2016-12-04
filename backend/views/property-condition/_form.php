@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use backend\models\Property;
+use backend\models\ConditionStatus;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\PropertyCondition */
@@ -12,9 +15,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_property')->textInput() ?>
+    <?= $form->field($model, 'id_property')->dropDownList(ArrayHelper::map(Property::find()->all(), 'id_property', 'title'))->label('Propiedad')  ?>
 
-    <?= $form->field($model, 'id_condition')->textInput() ?>
+    <?= $form->field($model, 'id_condition')->dropDownList(ArrayHelper::map(ConditionStatus::find()->all(), 'id', 'condition_name'))->label('Condición')  ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
