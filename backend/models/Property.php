@@ -138,6 +138,9 @@ class Property extends \yii\db\ActiveRecord
             'images' => function($model) {
                 return $model->propertyImages;
             },
+            'prices' => function($model) {
+                return $model->propertyPrices;
+            },
         ];
     }
 
