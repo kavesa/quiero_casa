@@ -47,7 +47,6 @@ class Property extends \yii\db\ActiveRecord
 
     public $image;
     public $filename;
-    public $condition;
     public $avatar;
 
     /**
@@ -148,8 +147,7 @@ class Property extends \yii\db\ActiveRecord
         ];
     }
 
-    public function beforeSave($insert)
-    {
+    public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
 
             $this->bedrooms = (!$this->bedrooms?0:$this->bedrooms);

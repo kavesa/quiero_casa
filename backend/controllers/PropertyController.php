@@ -7,6 +7,7 @@ use backend\models\Property;
 use backend\models\PropertySearch;
 use backend\models\PropertyImage;
 use backend\models\PropertyCondition;
+use backend\models\ConditionStatus;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -80,17 +81,16 @@ class PropertyController extends Controller
     public function actionCreate()
     {
         $model = new Property();
-
         if ($model->load(Yii::$app->request->post())) {
+            
             if ($model->save()) {
-                $condition = new PropertyCondition();
-                $condition->id_property = $model->id_property;
-                $condition->id_condition = $model->condition;
-                $condition->save();
+                $conditionStatus = ConditionStatus::findAll(Yii::$app->request->post()["Property"]["propertyConditions"]);
+                $conditionCount = count($conditionStatus);
 
-                $model->link('propertyConditions', $condition);
+                for ($i = 0; $i < $conditionCount; $i++) {
+                    $model->link('idConditions', $conditionStatus[$i]);
+                }
                 
-
                 $this->modelId = $model->id_property;
             }
             return $this->redirect(['view', 'id' => $model->id_property]);
@@ -165,6 +165,16 @@ class PropertyController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $this->modelId = $model->id_property;
+
+            $model->unlinkAll('idConditions', true);
+
+            $conditionStatus = ConditionStatus::findAll(Yii::$app->request->post()["Property"]["propertyConditions"]);
+            $conditionCount = count($conditionStatus);
+
+            for ($i = 0; $i < $conditionCount; $i++) {
+                $model->link('idConditions', $conditionStatus[$i]);
+            }
+                
             return $this->redirect(['view', 'id' => $model->id_property]);
         } else {
             return $this->render('update', [

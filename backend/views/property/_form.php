@@ -155,8 +155,13 @@ use kartik\file\FileInput;
         'pluginOptions'=>['allowedFileExtensions'=>['jpg','gif','png']
     ]]); ?>
 
-    <?= $form->field($model, 'propertyConditions')->dropDownList(ArrayHelper::map(ConditionStatus::find()->all(), 'id', 'condition_name'))->label('Condición de propiedad')  ?>
     
+    <?=$form->field($model, 'propertyConditions')            
+     ->dropDownList(ArrayHelper::map(ConditionStatus::find()->all(), 'id', 'condition_name'), [
+            'multiple'=>'multiple',
+            'class'=>'',              
+        ])->label("Condiciones de propiedad"); ?>
+
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
