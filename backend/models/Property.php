@@ -142,6 +142,9 @@ class Property extends \yii\db\ActiveRecord
             'property_condition' => function($model) {
                 return $model->idPropertyCondition;
             },
+            'prices' => function($model) {
+                return $model->propertyPrices;
+            },
         ];
     }
 

@@ -62,12 +62,20 @@ class PropertySearch extends Property
         // grid filtering conditions
         $query->andFilterWhere([
             'id_property' => $this->id_property,
-            'constructed_surface' => $this->constructed_surface,
-            'total_surface' => $this->total_surface,
             'id_neighborhood' => $this->id_neighborhood,
             'id_client' => $this->id_client,
             'id_property_type' => $this->id_property_type,
         ]);
+
+        if(isset($params['bathrooms'])) $query->andFilterWhere(['=', 'bathrooms', $params['bathrooms']]);
+        if(isset($params['bedrooms'])) $query->andFilterWhere(['=', 'bedrooms', $params['bedrooms']]);
+        if(isset($params['laundry'])) $query->andFilterWhere(['=', 'laundry', $params['laundry']]);
+        if(isset($params['barbacoa'])) $query->andFilterWhere(['=', 'barbacoa', $params['barbacoa']]);
+        if(isset($params['garage'])) $query->andFilterWhere(['=', 'garage', $params['garage']]);
+        if(isset($params['backyard'])) $query->andFilterWhere(['=', 'backyard', $params['backyard']]);
+        if(isset($params['frontyard'])) $query->andFilterWhere(['=', 'frontyard', $params['frontyard']]);
+        if(isset($params['swimmingpool'])) $query->andFilterWhere(['=', 'swimmingpool', $params['swimmingpool']]);
+        if(isset($params['guesthouse'])) $query->andFilterWhere(['=', 'guesthouse', $params['guesthouse']]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'short_description', $this->short_description])
@@ -76,6 +84,7 @@ class PropertySearch extends Property
             ->andFilterWhere(['like', 'latitude', $this->latitude])
             ->andFilterWhere(['like', 'longitude', $this->longitude]);
 
+        //Búsqueda por near location
         if(isset($params['location']))
         {
             $location = explode(';', $params['location']);
@@ -98,6 +107,47 @@ class PropertySearch extends Property
 
             //var_dump($result);die;
         }
+
+        //búsqueda por total surface range
+        if(isset($params['total_surface_range']))
+        {
+            $range = explode(';', $params['total_surface_range']);
+            $min_surface = $range[0];
+            $max_surface = $range[1];
+
+            $query->andFilterWhere(['>=', 'total_surface', $min_surface]);
+            $query->andFilterWhere(['<=', 'total_surface', $max_surface]);
+        }
+        else
+        {
+            $query->andFilterWhere(['total_surface' => $this->total_surface]);
+        }
+
+        //búsqueda por constructed surface range
+        if(isset($params['constructed_surface_range']))
+        {
+            $range = explode(';', $params['constructed_surface_range']);
+            $min_surface = $range[0];
+            $max_surface = $range[1];
+
+            $query->andFilterWhere(['>=', 'constructed_surface', $min_surface]);
+            $query->andFilterWhere(['<=', 'constructed_surface', $max_surface]);
+        }
+        else
+        {
+            $query->andFilterWhere(['constructed_surface' => $this->constructed_surface]);
+        }
+
+        //búsqueda por price range
+        if(isset($params['price_range']))
+        {
+            $range = explode(';', $params['price_range']);
+            $price_from = $range[0];
+            $price_to = $range[1];
+            $query->joinWith(['propertyPrices'])->where(['>=', 'price', $price_from]);
+            $query->joinWith(['propertyPrices'])->where(['<=', 'price', $price_to]);
+        }
+
 
         if(isset($params['limit']))
         {
