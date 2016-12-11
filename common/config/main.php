@@ -22,5 +22,17 @@ return [
 	        'identityClass' => 'mdm\admin\models\User',
 	        'loginUrl' => ['admin/user/login'],
     	],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'itfuno@gmail.com',
+                'password' => 'ka104080',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
+        ],
     ],
 ];

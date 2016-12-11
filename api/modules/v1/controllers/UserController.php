@@ -6,6 +6,7 @@ use Yii;
 use yii\rest\ActiveController;
 use mdm\admin\models\form\Signup;
 use mdm\admin\models\User;
+use api\common\components\Mailer;
 
 class UserController extends ActiveController
 {
@@ -14,7 +15,8 @@ class UserController extends ActiveController
     public function actions() 
     { 
         $actions = parent::actions();
-        unset($actions['create']);// = [$this, 'Signup'];
+        unset($actions['create']);
+        unset($actions['index']);
         return $actions;
     }
 
@@ -25,7 +27,7 @@ class UserController extends ActiveController
             //  Performs authorization by token
             'tokenAuth' => [
                 'class' => \conquer\oauth2\TokenAuth::className(),
-                'only' => ['index', 'view', 'delete', 'update'], //solo para la accion indicada
+                'only' => ['view', 'delete', 'update'], //solo para la accion indicada
             ],
         ];
     }
@@ -33,7 +35,7 @@ class UserController extends ActiveController
     public function afterAction($action, $result)
 	{
 	    //$result = parent::afterAction($action, $result);
-		if($action->id == "index")
+		/*if($action->id == "index")
         {
             $user = \Yii::$app->user->identity;
             
@@ -41,7 +43,7 @@ class UserController extends ActiveController
             				'userid' => $user->id);
     	    
     	    return $result;
-        }
+        }*/
 	}
 
     public function actionCreate()
@@ -49,7 +51,7 @@ class UserController extends ActiveController
         $model = new Signup();
         $body = Yii::$app->getRequest()->bodyParams;
 
-        if(User::findByUsername($body['username']))
+        if($uu = User::findByUsername($body['username']))
         {
             $response = Yii::$app->response;
             $response->format = \yii\web\Response::FORMAT_JSON;
@@ -65,15 +67,47 @@ class UserController extends ActiveController
         if ($user = $model->signup()) {
             $result = array('username' => $user->username,
                             'userid' => $user->id);
-            
             $user = User::findByUsername($body['username']);
         }
 
         $response = Yii::$app->response;
         $response->format = \yii\web\Response::FORMAT_JSON;
-        $response->data = ['message' => 'User created'];
+        $response->data = ['message' => 'User created. Confirmation pending.'];
         $response->statusCode = 200;
         return $response;
+    }
 
+    public function actionIndex()
+    {
+        $response = Yii::$app->response;
+        $response->format = \yii\web\Response::FORMAT_JSON;
+        
+        if(isset(Yii::$app->getRequest()->getQueryParams()['secret']))
+        {
+            $secret = Yii::$app->getRequest()->getQueryParams()['secret'];
+            $user = User::findByAuthKey($secret);
+
+            if($user)
+            {
+                $user->status = 10;
+                $user->save();
+
+                $response->data = ['message' => 'User confirmed.'];
+                $response->statusCode = 200;
+            }
+            else
+            {
+                $response->data = ['message' => 'Provided secret not suitable for a teapot.'];
+                $response->statusCode = 418;
+            }
+
+        }
+        else
+        {
+            $response->data = ['message' => 'Bad request. Missing secret for user activation.'];
+            $response->statusCode = 400;
+        }
+
+        return $response;
     }
 }

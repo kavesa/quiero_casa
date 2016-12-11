@@ -42,6 +42,7 @@ class PropertySearch extends Property
      */
     public function search($params)
     {
+
         $query = Property::find();
 
         // add conditions that should always apply here
@@ -76,6 +77,9 @@ class PropertySearch extends Property
         if(isset($params['frontyard'])) $query->andFilterWhere(['=', 'frontyard', $params['frontyard']]);
         if(isset($params['swimmingpool'])) $query->andFilterWhere(['=', 'swimmingpool', $params['swimmingpool']]);
         if(isset($params['guesthouse'])) $query->andFilterWhere(['=', 'guesthouse', $params['guesthouse']]);
+        if(isset($params['id_client_type'])) $query->joinWith(['idClient'])->where(['=', 'id_client_type', $params['id_client_type']]);
+        if(isset($params['id_condition'])) $query->joinWith(['idConditions'])->where(['=', 'id_condition', $params['id_condition']]);
+        if(isset($params['id_operation_type'])) $query->joinWith(['propertyPrices'])->where(['=', 'id_operation', $params['id_operation_type']]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'short_description', $this->short_description])
@@ -139,6 +143,7 @@ class PropertySearch extends Property
         }
 
         //búsqueda por price range
+        //se debe llamar usando también el queryparam 'id_operation_type'
         if(isset($params['price_range']))
         {
             $range = explode(';', $params['price_range']);
@@ -146,6 +151,8 @@ class PropertySearch extends Property
             $price_to = $range[1];
             $query->joinWith(['propertyPrices'])->where(['>=', 'price', $price_from]);
             $query->joinWith(['propertyPrices'])->where(['<=', 'price', $price_to]);
+            $query->joinWith(['propertyPrices'])->where(['=', 'id_currency', $params['id_currency']]);
+            $query->joinWith(['propertyPrices'])->where(['=', 'id_operation', $params['id_operation_type']]);
         }
 
 

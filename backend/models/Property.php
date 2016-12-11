@@ -123,6 +123,9 @@ class Property extends \yii\db\ActiveRecord
             'client' => function($model) {
                 return $model->idClient;
             },
+            'client_type' => function($model) {
+                return $model->idClient->idClientType;
+            },
             'property_type' => function($model) {
                 return $model->idPropertyType;
             },
@@ -140,6 +143,9 @@ class Property extends \yii\db\ActiveRecord
             },
             'prices' => function($model) {
                 return $model->propertyPrices;
+            },
+            'condition' => function($model) {
+                return $model->idConditions;
             },
         ];
     }
@@ -243,4 +249,10 @@ class Property extends \yii\db\ActiveRecord
     {
         return $this->hasMany(PropertyPrice::className(), ['id_property' => 'id_property']);
     }
+
+    /*public function getIdPrices()
+    {
+        return $this->hasMany(PropertyPrice::className(), ['id' => 'id_condition'])->viaTable('property_condition', ['id_property' => 'id_property']);
+    }*/
+
 }
