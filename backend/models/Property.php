@@ -4,6 +4,8 @@ namespace backend\models;
 
 use Yii;
 
+use yii\helpers\Url;
+
 use yii\web\UploadedFile;
 
 /**
@@ -48,6 +50,9 @@ class Property extends \yii\db\ActiveRecord
     public $image;
     public $filename;
     public $avatar;
+    public $currency;
+    public $operationType;
+    public $price;
 
     /**
      * @inheritdoc
@@ -135,15 +140,16 @@ class Property extends \yii\db\ActiveRecord
             'frontyard',
             'swimmingpool',
             'guesthouse',
+            'prices' => function($model) {
+                return $model->propertyPrices;
+            },
             'condition_status' => function($model) {
                 return $model->idConditions;
             },
             'property_condition' => function($model) {
                 return $model->idPropertyCondition;
             },
-            'prices' => function($model) {
-                return $model->propertyPrices;
-            },
+            'id_currency',
         ];
     }
 
@@ -165,6 +171,8 @@ class Property extends \yii\db\ActiveRecord
             return false;
         }
     }
+
+
 
     /**
      * @return \yii\db\ActiveQuery
@@ -244,5 +252,15 @@ class Property extends \yii\db\ActiveRecord
     public function getPropertyPrices()
     {
         return $this->hasMany(PropertyPrice::className(), ['id_property' => 'id_property']);
+    }
+
+    public function getPropertyPricesString($id)
+    {
+        return Url::base(true) . '?r=property-price&PropertyPriceSearch[id_property]='.$id;
+    }
+
+    public function getPropertyConditionsString($id) 
+    {
+        return Url::base(true) . '?r=property-condition&PropertyConditionSearch[id_property]='.$id;
     }
 }
