@@ -149,10 +149,10 @@ class Property extends \yii\db\ActiveRecord
             'condition' => function($model) {
                 return $model->idConditions;
             },
-            'property_condition' => function($model) {
+            /*'property_condition' => function($model) {
                 return $model->idPropertyCondition;
-            },
-            'id_currency',
+            },*/
+            /*'id_currency',*/
         ];
     }
 
@@ -257,13 +257,13 @@ class Property extends \yii\db\ActiveRecord
         return $this->hasMany(PropertyPrice::className(), ['id_property' => 'id_property']);
     }
 
-<<<<<<< HEAD
+
     /*public function getIdPrices()
     {
         return $this->hasMany(PropertyPrice::className(), ['id' => 'id_condition'])->viaTable('property_condition', ['id_property' => 'id_property']);
     }*/
 
-=======
+
     public function getPropertyPricesString($id)
     {
         return Url::base(true) . '?r=property-price&PropertyPriceSearch[id_property]='.$id;
@@ -273,5 +273,5 @@ class Property extends \yii\db\ActiveRecord
     {
         return Url::base(true) . '?r=property-condition&PropertyConditionSearch[id_property]='.$id;
     }
->>>>>>> 5df8631607a166b9cdd5ecb62249bd28f4d7a1c5
+
 }
