@@ -4,7 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;    
 use backend\models\Neighbourhood;
+use backend\models\ConditionStatus;
 use backend\models\Client;
+use backend\models\Currency;
+use backend\models\OperationType;
 use backend\models\PropertyType;
 use backend\widgets\FileUpload;
 use kartik\checkbox\CheckboxX;
@@ -41,6 +44,7 @@ use kartik\file\FileInput;
     <?= $form->field($model, 'total_surface')->textInput() ?>
 
     <?= $form->field($model, 'bedrooms')->textInput() ?>
+    
     <?= $form->field($model, 'bathrooms')->textInput() ?>
 
     <label class="control-label" for="laundry">Lavandería</label>
@@ -154,6 +158,25 @@ use kartik\file\FileInput;
     ]]); ?>
 
     
+
+
+    <?php if ($this->context->action->id == 'create') { ?>
+    <label class="control-label" >Condiciones de propiedad</label>
+        <br/>
+    <?php } ?>
+
+    <?php if ($this->context->action->id == 'create') {
+
+            echo $form->field($model, 'propertyConditions')            
+     ->dropDownList(ArrayHelper::map(ConditionStatus::find()->all(), 'id', 'condition_name'), [
+            'multiple'=>'multiple',
+            'class'=>'',              
+        ])->label(""); 
+            echo $form->field($model, 'currency')->dropDownList(ArrayHelper::map(Currency::find()->all(), 'id', 'name'))->label('Moneda');
+            echo $form->field($model, 'operationType')->dropDownList(ArrayHelper::map(OperationType::find()->all(), 'id', 'type'))->label('Tipo de operación');
+            echo $form->field($model, 'price')->textInput();
+        } 
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -3,6 +3,11 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use yii\helpers\ArrayHelper;    
+use backend\models\Property;
+use backend\models\OperationType;
+use backend\models\Currency;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\PropertyPrice */
 /* @var $form yii\widgets\ActiveForm */
@@ -12,11 +17,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_property')->textInput() ?>
+    <?= $form->field($model, 'id_property')->dropDownList(ArrayHelper::map(Property::find()->all(), 'id_property', 'title'))->label('Propiedad')  ?>
 
-    <?= $form->field($model, 'id_operation')->textInput() ?>
+    <?= $form->field($model, 'id_operation')->dropDownList(ArrayHelper::map(OperationType::find()->all(), 'id', 'type'))->label('Operación')  ?>
 
-    <?= $form->field($model, 'id_currency')->textInput() ?>
+    <?= $form->field($model, 'id_currency')->dropDownList(ArrayHelper::map(Currency::find()->all(), 'id', 'name'))->label('Moneda')  ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
 

@@ -4,6 +4,8 @@ namespace backend\models;
 
 use Yii;
 
+use yii\helpers\Url;
+
 use yii\web\UploadedFile;
 
 /**
@@ -47,8 +49,10 @@ class Property extends \yii\db\ActiveRecord
 
     public $image;
     public $filename;
-
     public $avatar;
+    public $currency;
+    public $operationType;
+    public $price;
 
     /**
      * @inheritdoc
@@ -64,7 +68,7 @@ class Property extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'short_description', 'description', 'address', 'latitude', 'longitude', 'constructed_surface', 'total_surface', 'id_neighborhood', 'id_client', 'id_property_type'], 'required'],
+            [['title', 'short_description', 'description', 'address', 'latitude', 'longitude', 'constructed_surface', 'total_surface', 'id_neighborhood', 'id_client', 'id_property_type', 'bedrooms', 'bathrooms'], 'required'],
             [['constructed_surface', 'total_surface'], 'number'],
             [['id_neighborhood', 'id_client', 'id_property_type', 'bedrooms', 'bathrooms', 'laundry', 'barbacoa', 'garage', 'backyard', 'frontyard', 'swimmingpool', 'guesthouse'], 'integer'],
             [['title', 'short_description', 'description', 'address'], 'string', 'max' => 255],
@@ -102,6 +106,7 @@ class Property extends \yii\db\ActiveRecord
             'frontyard' => 'Front Yard',
             'swimmingpool' => 'Swimming Pool',
             'guesthouse' => 'Guest House',
+            'id_condition' => 'Condicion',
         ];
     }
 
@@ -138,20 +143,20 @@ class Property extends \yii\db\ActiveRecord
             'frontyard',
             'swimmingpool',
             'guesthouse',
-            'images' => function($model) {
-                return $model->propertyImages;
-            },
             'prices' => function($model) {
                 return $model->propertyPrices;
             },
             'condition' => function($model) {
                 return $model->idConditions;
             },
+            'property_condition' => function($model) {
+                return $model->idPropertyCondition;
+            },
+            'id_currency',
         ];
     }
 
-    public function beforeSave($insert)
-    {
+    public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
 
             $this->bedrooms = (!$this->bedrooms?0:$this->bedrooms);
@@ -169,6 +174,8 @@ class Property extends \yii\db\ActiveRecord
             return false;
         }
     }
+
+
 
     /**
      * @return \yii\db\ActiveQuery
@@ -250,9 +257,21 @@ class Property extends \yii\db\ActiveRecord
         return $this->hasMany(PropertyPrice::className(), ['id_property' => 'id_property']);
     }
 
+<<<<<<< HEAD
     /*public function getIdPrices()
     {
         return $this->hasMany(PropertyPrice::className(), ['id' => 'id_condition'])->viaTable('property_condition', ['id_property' => 'id_property']);
     }*/
 
+=======
+    public function getPropertyPricesString($id)
+    {
+        return Url::base(true) . '?r=property-price&PropertyPriceSearch[id_property]='.$id;
+    }
+
+    public function getPropertyConditionsString($id) 
+    {
+        return Url::base(true) . '?r=property-condition&PropertyConditionSearch[id_property]='.$id;
+    }
+>>>>>>> 5df8631607a166b9cdd5ecb62249bd28f4d7a1c5
 }

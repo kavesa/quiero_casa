@@ -17,6 +17,7 @@ use yii\mail\BaseMailer;
 <h2 style="color: #2e6c80;">Te esperamos con las mejores ofertas!</h2>
 
 
+
 </body>
 </html>
 

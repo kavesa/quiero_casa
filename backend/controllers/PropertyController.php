@@ -6,6 +6,9 @@ use Yii;
 use backend\models\Property;
 use backend\models\PropertySearch;
 use backend\models\PropertyImage;
+use backend\models\PropertyCondition;
+use backend\models\PropertyPrice;
+use backend\models\ConditionStatus;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -79,10 +82,23 @@ class PropertyController extends Controller
     public function actionCreate()
     {
         $model = new Property();
-
+        $propertyPrice = new PropertyPrice();
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
+                $conditionStatus = ConditionStatus::findAll(Yii::$app->request->post()["Property"]["propertyConditions"]);
+                $conditionCount = count($conditionStatus);
+
+                for ($i = 0; $i < $conditionCount; $i++) {
+                    $model->link('idConditions', $conditionStatus[$i]);
+                }
+                
                 $this->modelId = $model->id_property;
+
+                $propertyPrice->id_property = $model->id_property;
+                $propertyPrice->price = Yii::$app->request->post()["Property"]["price"];
+                $propertyPrice->id_operation = Yii::$app->request->post()["Property"]["operationType"];
+                $propertyPrice->id_currency = Yii::$app->request->post()["Property"]["currency"];
+                $propertyPrice->save();
             }
             return $this->redirect(['view', 'id' => $model->id_property]);
         } else {
@@ -91,6 +107,7 @@ class PropertyController extends Controller
             ]);
         }
     }
+
 
     public function afterAction($action, $result) {
         $result = parent::afterAction($action, $result);
@@ -117,10 +134,8 @@ class PropertyController extends Controller
 
                 for ($i = 0; $i < $fileCount; $i++) {
                     $imageModel = new PropertyImage();
-                    $model->filename = $images[$i]->name;
-                    $tmpext = explode('.', $model->filename);
-                    $ext = end($tmpext);
-
+                    $model->filename = $images[$i];
+                    $ext = end(explode(".", $model->filename));
                     $model->avatar = Yii::$app->security->generateRandomString().".{$ext}";
 
                     $path = '../files/'. $model->avatar;
@@ -157,6 +172,16 @@ class PropertyController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $this->modelId = $model->id_property;
+
+            $model->unlinkAll('idConditions', true);
+
+            $conditionStatus = ConditionStatus::findAll(Yii::$app->request->post()["Property"]["propertyConditions"]);
+            $conditionCount = count($conditionStatus);
+
+            for ($i = 0; $i < $conditionCount; $i++) {
+                $model->link('idConditions', $conditionStatus[$i]);
+            }
+                
             return $this->redirect(['view', 'id' => $model->id_property]);
         } else {
             return $this->render('update', [

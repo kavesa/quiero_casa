@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+use backend\models\PropertyPrice;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\Property */
 
@@ -33,14 +35,32 @@ $this->params['breadcrumbs'][] = $this->title;
             'short_description',
             'description',
             'address',
-            'latitude',
-            'longitude',
             'constructed_surface',
             'total_surface',
             'id_neighborhood',
             'id_client',
             'id_property_type',
+            'bedrooms',
+            'bathrooms',
+            'laundry:boolean',
+            'barbacoa:boolean',
+            'garage:boolean',
+            'backyard:boolean',
+            'frontyard:boolean',
+            'swimmingpool:boolean',
+            'guesthouse:boolean',
+            [
+                'attribute' => 'propertyConditions',
+                'value' => Html::a('View', $model->getPropertyConditionsString($model->id_property)),
+                'format' => 'raw'
+            ],
+            [
+                'attribute' => 'propertyPrices',
+                'value' => Html::a('View', $model->getPropertyPricesString($model->id_property)),
+                'format' => 'raw'
+            ],
         ],
     ]) ?>
+
 
 </div>
