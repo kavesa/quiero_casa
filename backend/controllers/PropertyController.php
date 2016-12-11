@@ -7,6 +7,7 @@ use backend\models\Property;
 use backend\models\PropertySearch;
 use backend\models\PropertyImage;
 use backend\models\PropertyCondition;
+use backend\models\PropertyPrice;
 use backend\models\ConditionStatus;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -81,8 +82,8 @@ class PropertyController extends Controller
     public function actionCreate()
     {
         $model = new Property();
+        $propertyPrice = new PropertyPrice();
         if ($model->load(Yii::$app->request->post())) {
-            
             if ($model->save()) {
                 $conditionStatus = ConditionStatus::findAll(Yii::$app->request->post()["Property"]["propertyConditions"]);
                 $conditionCount = count($conditionStatus);
@@ -92,6 +93,12 @@ class PropertyController extends Controller
                 }
                 
                 $this->modelId = $model->id_property;
+
+                $propertyPrice->id_property = $model->id_property;
+                $propertyPrice->price = Yii::$app->request->post()["Property"]["price"];
+                $propertyPrice->id_operation = Yii::$app->request->post()["Property"]["operationType"];
+                $propertyPrice->id_currency = Yii::$app->request->post()["Property"]["currency"];
+                $propertyPrice->save();
             }
             return $this->redirect(['view', 'id' => $model->id_property]);
         } else {
