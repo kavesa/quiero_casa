@@ -52,6 +52,15 @@ class SignupForm extends Model
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
+
+        var_dump("at signup");die;
+                Yii::$app->mailer->compose()
+                    ->setFrom('kavesa@adinet.com.uy')
+                    ->setTo('kerveza@gmail.com')
+                    ->setSubject('Message subject')
+                    ->setTextBody('Hi from quiero casa')
+                    ->setHtmlBody('<b>New user registered</b>')
+                    ->send();
         
         return $user->save() ? $user : null;
     }

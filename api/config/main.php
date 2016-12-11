@@ -33,7 +33,7 @@ return [
                     'always_issue_new_refresh_token' => true
                 ]
             ]
-        ]
+        ],
     ],
     'components' => [        
         'user' => [
@@ -66,6 +66,18 @@ return [
                 'PATCH <apiv:v\d+>/<controller:\w+>/<id:(\d)+>'  => '<apiv>/<controller>/update',
                 'DELETE <apiv:v\d+>/<controller:\w+>/<id:(\d(\,\d)*)+>' => '<apiv>/<controller>/delete',  
                 //'POST <apiv:v\d+>/user' => '<apiv>/user/create',
+            ],
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'itfuno@gmail.com',
+                'password' => 'ka104080',
+                'port' => '587',
+                'encryption' => 'tls',
             ],
         ],
     ],
