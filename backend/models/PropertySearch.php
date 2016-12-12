@@ -69,7 +69,17 @@ class PropertySearch extends Property
         ]);
 
         if(isset($params['bathrooms'])) $query->andFilterWhere(['=', 'bathrooms', $params['bathrooms']]);
-        if(isset($params['bedrooms'])) $query->andFilterWhere(['=', 'bedrooms', $params['bedrooms']]);
+        if(isset($params['bedrooms'])) 
+        {
+            if($params['bedrooms'] == '999')
+            {
+                $query->andFilterWhere(['>', 'bedrooms', 4]);
+            }
+            else
+            {
+                $query->andFilterWhere(['=', 'bedrooms', $params['bedrooms']]);
+            }
+        } 
         if(isset($params['laundry'])) $query->andFilterWhere(['=', 'laundry', $params['laundry']]);
         if(isset($params['barbacoa'])) $query->andFilterWhere(['=', 'barbacoa', $params['barbacoa']]);
         if(isset($params['garage'])) $query->andFilterWhere(['=', 'garage', $params['garage']]);

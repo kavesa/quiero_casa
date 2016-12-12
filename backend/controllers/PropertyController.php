@@ -11,6 +11,7 @@ use backend\models\PropertyPrice;
 use backend\models\ConditionStatus;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use kartik\file\FileInput;
@@ -81,30 +82,34 @@ class PropertyController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Property();
-        $propertyPrice = new PropertyPrice();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                $conditionStatus = ConditionStatus::findAll(Yii::$app->request->post()["Property"]["propertyConditions"]);
-                $conditionCount = count($conditionStatus);
+        if(Yii::$app->user->can('create-property')){
+            $model = new Property();
+            $propertyPrice = new PropertyPrice();
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->save()) {
+                    $conditionStatus = ConditionStatus::findAll(Yii::$app->request->post()["Property"]["propertyConditions"]);
+                    $conditionCount = count($conditionStatus);
 
-                for ($i = 0; $i < $conditionCount; $i++) {
-                    $model->link('idConditions', $conditionStatus[$i]);
+                    for ($i = 0; $i < $conditionCount; $i++) {
+                        $model->link('idConditions', $conditionStatus[$i]);
+                    }
+                    
+                    $this->modelId = $model->id_property;
+
+                    $propertyPrice->id_property = $model->id_property;
+                    $propertyPrice->price = Yii::$app->request->post()["Property"]["price"];
+                    $propertyPrice->id_operation = Yii::$app->request->post()["Property"]["operationType"];
+                    $propertyPrice->id_currency = Yii::$app->request->post()["Property"]["currency"];
+                    $propertyPrice->save();
                 }
-                
-                $this->modelId = $model->id_property;
-
-                $propertyPrice->id_property = $model->id_property;
-                $propertyPrice->price = Yii::$app->request->post()["Property"]["price"];
-                $propertyPrice->id_operation = Yii::$app->request->post()["Property"]["operationType"];
-                $propertyPrice->id_currency = Yii::$app->request->post()["Property"]["currency"];
-                $propertyPrice->save();
+                return $this->redirect(['view', 'id' => $model->id_property]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
             }
-            return $this->redirect(['view', 'id' => $model->id_property]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            throw new ForbiddenHttpException;
         }
     }
 
@@ -168,25 +173,29 @@ class PropertyController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can('update-property')){
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->modelId = $model->id_property;
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $this->modelId = $model->id_property;
 
-            $model->unlinkAll('idConditions', true);
+                $model->unlinkAll('idConditions', true);
 
-            $conditionStatus = ConditionStatus::findAll(Yii::$app->request->post()["Property"]["propertyConditions"]);
-            $conditionCount = count($conditionStatus);
+                $conditionStatus = ConditionStatus::findAll(Yii::$app->request->post()["Property"]["propertyConditions"]);
+                $conditionCount = count($conditionStatus);
 
-            for ($i = 0; $i < $conditionCount; $i++) {
-                $model->link('idConditions', $conditionStatus[$i]);
+                for ($i = 0; $i < $conditionCount; $i++) {
+                    $model->link('idConditions', $conditionStatus[$i]);
+                }
+                    
+                return $this->redirect(['view', 'id' => $model->id_property]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
             }
-                
-            return $this->redirect(['view', 'id' => $model->id_property]);
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            throw new ForbiddenHttpException;
         }
     }
 
@@ -198,9 +207,13 @@ class PropertyController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->can('delete-property')){
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        } else {
+            throw new ForbiddenHttpException;
+        }
     }
 
 
