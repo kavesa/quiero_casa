@@ -139,8 +139,11 @@ class PropertyController extends Controller
 
                 for ($i = 0; $i < $fileCount; $i++) {
                     $imageModel = new PropertyImage();
-                    $model->filename = $images[$i];
-                    $ext = end(explode(".", $model->filename));
+                    //$model->filename = $images[$i];
+                    //$ext = end(explode(".", $model->filename));
+                    $model->filename = $images[$i]->name;
+                    $tmpext = explode('.', $model->filename);
+                    $ext = end($tmpext);
                     $model->avatar = Yii::$app->security->generateRandomString().".{$ext}";
 
                     $path = '../files/'. $model->avatar;
@@ -155,6 +158,13 @@ class PropertyController extends Controller
                     $imageModel->image = "uploads/{$this->modelId}/{$model->filename}";
                     $imageModel->id_property = "{$this->modelId}";
                     $imageModel->save();
+
+                    //delete local image
+                    //$deleteError = 0;
+                    //$lines = array();
+                    //var_dump("DEL /F/Q \"c:\\xampp\\htdocs\\quiero_casa\\backend\\files\\$model->avatar\"");die;
+                    //exec("DEL /F/Q \"c:\\xampp\\htdocs\\quiero_casa\\backend\\files\\$model->avatar\"");
+                    @unlink($path);
                 }
             }
             catch (S3Exception $e) {
