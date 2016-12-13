@@ -25,7 +25,8 @@
         "aws/aws-sdk-php": "^3.19",
         "kartik-v/yii2-widget-fileinput": "^1.0",
         "kartik-v/yii2-checkbox-x": "*",
-        "dektrium/yii2-user": "0.9.*@dev"
+        "dektrium/yii2-user": "0.9.*@dev",
+        "dmstr/yii2-adminlte-asset": "2.*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
