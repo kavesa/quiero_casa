@@ -143,13 +143,13 @@ class Property extends \yii\db\ActiveRecord
             'prices' => function($model) {
                 return $model->propertyPrices;
             },
-            'condition_status' => function($model) {
+            /*'condition_status' => function($model) {
+                return $model->idConditions;
+            },*/
+            'property_condition' => function($model) {
                 return $model->idConditions;
             },
-            'property_condition' => function($model) {
-                return $model->idPropertyCondition;
-            },
-            'id_currency',
+            /*'id_currency',*/
         ];
     }
 

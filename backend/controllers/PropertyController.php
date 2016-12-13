@@ -160,11 +160,9 @@ class PropertyController extends Controller
                     $imageModel->save();
 
                     //delete local image
-                    //$deleteError = 0;
-                    //$lines = array();
                     //var_dump("DEL /F/Q \"c:\\xampp\\htdocs\\quiero_casa\\backend\\files\\$model->avatar\"");die;
                     //exec("DEL /F/Q \"c:\\xampp\\htdocs\\quiero_casa\\backend\\files\\$model->avatar\"");
-                    @unlink($path);
+                    //@unlink($path);
                 }
             }
             catch (S3Exception $e) {
