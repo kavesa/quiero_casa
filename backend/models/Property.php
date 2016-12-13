@@ -128,9 +128,6 @@ class Property extends \yii\db\ActiveRecord
             'client' => function($model) {
                 return $model->idClient;
             },
-            'client_type' => function($model) {
-                return $model->idClient->idClientType;
-            },
             'property_type' => function($model) {
                 return $model->idPropertyType;
             },
@@ -146,16 +143,13 @@ class Property extends \yii\db\ActiveRecord
             'prices' => function($model) {
                 return $model->propertyPrices;
             },
-            'condition' => function($model) {
+            'condition_status' => function($model) {
                 return $model->idConditions;
             },
-            'images' => function($model) {
-                return $model->propertyImages;
-            },
-            /*'property_condition' => function($model) {
+            'property_condition' => function($model) {
                 return $model->idPropertyCondition;
-            },*/
-            /*'id_currency',*/
+            },
+            'id_currency',
         ];
     }
 

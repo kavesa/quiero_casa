@@ -65,7 +65,7 @@ class Client extends \yii\db\ActiveRecord
     {
         return[
             'id',
-            'client_type' => function($model) {
+            'id_client_type' => function($model) {
                 return $model->idClientType;
             },
             'name',

@@ -27,6 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+    
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -37,9 +39,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'address',
             'constructed_surface',
             'total_surface',
-            'id_neighborhood',
-            'id_client',
-            'id_property_type',
+            [
+                'label'  => 'Barrio',
+                'value'  => $model->idNeighborhood->name,
+            ],
+            [
+                'label'  => 'Cliente',
+                'value'  => $model->idClient->name,
+            ],
+            [
+                'label'  => 'Tipo de Propiedad',
+                'value'  => $model->idPropertyType->description,
+            ],
             'bedrooms',
             'bathrooms',
             'laundry:boolean',

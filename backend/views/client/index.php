@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\grid\GridView;
+use backend\models\ClientType;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ClientSearch */
@@ -25,13 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'id_client_type',
+            ['attribute'=>'id_client_type'
+            ,'value'=>function($model){return $model->idClientType->name;}
+            ,'filter'=>ArrayHelper::map(ClientType::find()->orderBy('name')->asArray()->all(), 'id', 'name'),],
             'name',
             'priority',
             'phone',
             // 'email:email',
             // 'availability',
-            // 'is_business',
+            // 'is_business:boolean',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
