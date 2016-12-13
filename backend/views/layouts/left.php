@@ -30,6 +30,7 @@
                     ['label' => 'Barrio', 'icon' => 'fa fa-bank', 'url' => ['/neighbourhood']],
                     ['label' => 'Propiedades', 'icon' => 'fa fa-home', 'url' => ['/property']],
                     ['label' => 'Clientes', 'icon' => 'fa fa-user', 'url' => ['/client']],
+                    ['label' => 'Tipo de Clientes', 'icon' => 'fa fa-user', 'url' => ['/client-type']],
                     ['label' => 'Monedas', 'icon' => 'fa fa-circle', 'url' => ['/currency']],
                     ['label' => 'Tipos de operación', 'icon' => 'fa fa-flag', 'url' => ['/operation-type']],
                 ],

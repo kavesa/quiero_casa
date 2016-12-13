@@ -29,13 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'id_client_type',
+            [
+                'label'  => 'Tipo',
+                'value'  => $model->idClientType->name,
+            ],
             'name',
             'priority',
             'phone',
             'email:email',
             'availability',
-            'is_business',
+            'is_business:boolean',
         ],
     ]) ?>
 
