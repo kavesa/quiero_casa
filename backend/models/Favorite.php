@@ -36,6 +36,16 @@ class Favorite extends \yii\db\ActiveRecord
         ];
     }
 
+    public function fields()
+    {
+        return [
+            'id_user',
+            'property' => function($model) {
+                return $model->idProperty;
+            },
+        ];
+    }
+
     public static function primaryKey(){
         return array('id_user', 'id_property');
     }

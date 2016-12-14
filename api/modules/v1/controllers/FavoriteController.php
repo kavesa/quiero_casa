@@ -7,6 +7,7 @@ use yii\rest\ActiveController;
 use backend\models\Property;
 use backend\models\FavoriteSearch;
 use backend\models\Favorite;
+use yii\helpers\ArrayHelper;
 
 class FavoriteController extends ActiveController
 {
@@ -92,22 +93,30 @@ class FavoriteController extends ActiveController
     public function afterAction($action, $result)
 	{
 	    $result = parent::afterAction($action, $result);
-		
+
         if($action->id == 'index') {
             $user = \Yii::$app->user->identity;
             
             foreach ($result as $key => $value) {
             	if($result[$key]["id_user"] != $user->id) {
             		unset($result[$key]);
-            	}
+            	} else {
+                    //$result[$key] = $result[$key]['property'];
+
+                }
             }
+            $result = ArrayHelper::index($result, 'id_user');
 
             foreach ($result as $key => $value) {
+                $result[$key] = $result[$key]['property'];
+            }
+            /*foreach ($result as $key => $value) {
             	$model = Property::findOne($result[$key]["id_property"]);
             	$result[$key]["property"] = $model;
-            }
+            }*/
         }
-	    
+        
+        //var_dump($result);die;
 	    return $result;
 	}
 }
