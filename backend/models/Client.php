@@ -51,13 +51,13 @@ class Client extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_client_type' => 'Client Type',
-            'name' => 'Name',
-            'priority' => 'Priority',
-            'phone' => 'Phone',
+            'id_client_type' => 'Tipo de cliente',
+            'name' => 'Nombre',
+            'priority' => 'Prioridad',
+            'phone' => 'Teléfono',
             'email' => 'Email',
-            'availability' => 'Availability',
-            'is_business' => 'Is Business',
+            'availability' => 'Disponibilidad',
+            'is_business' => 'Es inmobiliaria',
         ];
     }
 

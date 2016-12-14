@@ -70,6 +70,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => Html::a('View', $model->getPropertyPricesString($model->id_property)),
                 'format' => 'raw'
             ],
+
+            [
+                'attribute' => 'propertyImages',
+                'value' => Html::a('View', $model->getPropertyImagesString($model->id_property)),
+                'format' => 'raw'
+            ],
         ],
     ]) ?>
 

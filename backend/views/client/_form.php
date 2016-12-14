@@ -16,7 +16,7 @@ use backend\models\ClientType;
 
     <?= $form->field($model, 'id_client_type')->dropDownList(
         ArrayHelper::map(ClientType::find()->all(), 'id', 'name'),
-        ['prompt'=>'Select Client Type']
+        ['prompt'=>'Seleccionar Tipo de Cliente']
     ) ?>
 
     <?= $form->field($model, 'is_business')->checkBox() ?>
@@ -32,7 +32,7 @@ use backend\models\ClientType;
     <?= $form->field($model, 'availability')->textArea(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
