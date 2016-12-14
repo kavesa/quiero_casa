@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\controllers\CurrencySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Currencies';
+$this->title = 'Monedas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="currency-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Currency', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Moneda', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

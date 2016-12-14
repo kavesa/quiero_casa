@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Neighbourhood */
 
-$this->title = 'Update Neighbourhood: ' . $model->name;
+$this->title = 'Actualizar Neighbourhood: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Neighbourhoods', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="neighbourhood-update">
 
