@@ -271,4 +271,8 @@ class Property extends \yii\db\ActiveRecord
         return Url::base(true) . '?r=property-condition&PropertyConditionSearch[id_property]='.$id;
     }
 
+    public function getPropertyImagesString($id) 
+    {
+        return Url::base(true) . '?r=property-image&PropertyImageSearch[id_property]='.$id;
+    }
 }
