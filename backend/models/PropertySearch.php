@@ -114,12 +114,12 @@ class PropertySearch extends Property
         if(isset($params['id_condition'])) $query->joinWith(['idConditions'])->where(['=', 'id_condition', $params['id_condition']]);
         if(isset($params['id_operation_type'])) $query->joinWith(['propertyPrices'])->where(['=', 'id_operation', $params['id_operation_type']]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
+        /*$query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'short_description', $this->short_description])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'latitude', $this->latitude])
-            ->andFilterWhere(['like', 'longitude', $this->longitude]);
+            ->andFilterWhere(['like', 'longitude', $this->longitude]);*/
 
         //Búsqueda por near location
         if(isset($params['location']))

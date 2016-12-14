@@ -39,7 +39,8 @@ class PropertyController extends ActiveController
 
     public function afterAction($action, $result)
     {
-        //var_dump(Yii::$app->getRequest()->getQueryParam('location'));die;
+        $result = parent::afterAction($action, $result);
+        //var_dump($result);die;
         if(Yii::$app->getRequest()->getQueryParam('location') != null)
         {
             foreach ($result as $key => $value) {
