@@ -40,7 +40,7 @@ class OperationType extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'type' => 'Type',
+            'type' => 'Tipo',
         ];
     }
 

@@ -154,7 +154,8 @@ use kartik\file\FileInput;
 
     <?= $form->field($model, 'image[]')->widget(FileInput::classname(), [
         'options'=>['multiple' => true,'accept'=>'image/*'],
-        'pluginOptions'=>['allowedFileExtensions'=>['jpg','gif','png']
+        'pluginOptions'=>['browseLabel' =>  'Buscar', 'showRemove' => false,
+        'showUpload' => false,'allowedFileExtensions'=>['jpg','gif','png']
     ]]); ?>
 
     

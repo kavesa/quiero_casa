@@ -40,7 +40,7 @@ class PropertyType extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'description' => 'Description',
+            'description' => 'Descripción',
         ];
     }
 
