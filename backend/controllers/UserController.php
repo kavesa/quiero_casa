@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
+use mdm\admin\models\form\Signup;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -65,10 +66,44 @@ class UserController extends Controller
     public function actionCreate()
     {
         if(Yii::$app->user->can('create-user')){
-            $model = new User();
+//var_dump(Yii::$app->request->post());die;
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            //$password = Yii::$app->request->post()['User']['password_hash'];
+            //unset(Yii::$app->request->post()['User']['password_hash']);
+            $model = new Signup();
+
+            if ($model->load(Yii::$app->request->post())) {
+                //$model->password = $model->password_hash;
+                //unset($model->password_hash);
+                $model->email = $model->username;
+                //var_dump($model);die;
+
+                //$model->signup();
+                
+                $user = new \mdm\admin\models\User();
+                $user->username = $model->username;
+                $user->email = $model->email;
+                $user->setPassword($model->password);
+                $user->generateAuthKey();
+                $user->status = 10;
+                
+                if ($user->save()) {
+                    /*$message = Yii::$app->mailer->compose(
+                            ['html' => '@app/mail-templates/confirm-registration.php'],*/
+                             /*'text' => '@app/mail-templates/mail'],*/
+                            /* ['auth_key' => $user->auth_key]
+                        );
+                    $message->setFrom(Yii::$app->params['adminEmail']);
+                    $message->setTo($user->email)
+                        ->setSubject('Confirma tu registro en QuieroCasa.com')
+                        ->send();
+
+                    return $user;*/
+                    return $this->redirect(['index']);
+                }
+                
+
+                return $this->redirect(['index']);
             } else {
                 return $this->render('create', [
                     'model' => $model,
