@@ -2,6 +2,7 @@
 
 namespace api\modules\v1\controllers;
 
+use Yii;
 use yii\rest\ActiveController;
 use backend\models\Property;
 use backend\models\FavoriteSearch;
@@ -29,6 +30,7 @@ class FavoriteController extends ActiveController
         $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
         unset($actions['delete']);
         unset($actions['view']);
+        unset($actions['create']);
         return $actions;
     }
 
@@ -66,6 +68,25 @@ class FavoriteController extends ActiveController
         $id_user = $ids[0];
         $id_property = $ids[1];
         Favorite::findOne($id_user, $id_property)->delete();
+    }
+
+    public function actionCreate()
+    {
+        $model = new Favorite();
+        $user = \Yii::$app->user->identity;
+
+        $model->id_user = $user->id;
+        $model->id_property = Yii::$app->request->post()["id_property"];
+
+        //Yii::$app->request->post()['id_user'] = $user->id;
+        //var_dump($model);die;
+
+        if (/*$model->load(Yii::$app->request->post()) &&*/ $model->save()) {
+            return $model->attributes;
+        } else {
+            return $model->getErrors();
+            //]);
+        }
     }
 
     public function afterAction($action, $result)

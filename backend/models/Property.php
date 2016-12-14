@@ -149,6 +149,9 @@ class Property extends \yii\db\ActiveRecord
             'property_condition' => function($model) {
                 return $model->idConditions;
             },
+            'images' => function($model) {
+                return $model->propertyImages;
+            },
             /*'id_currency',*/
         ];
     }

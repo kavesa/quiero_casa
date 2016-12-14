@@ -2,6 +2,7 @@
 
 namespace api\modules\v1\controllers;
 
+use Yii;
 use yii\rest\ActiveController;
 use backend\models\Property;
 use backend\models\PropertySearch;
@@ -34,6 +35,22 @@ class PropertyController extends ActiveController
                 'only' => ['create', 'update', 'delete'], 
             ],
         ];
+    }
+
+    public function afterAction($action, $result)
+    {
+        //var_dump(Yii::$app->getRequest()->getQueryParam('location'));die;
+        if(Yii::$app->getRequest()->getQueryParam('location') != null)
+        {
+            foreach ($result as $key => $value) {
+                $model = Property::findOne($result[$key]["id_property"]);
+                //$dist = $result[$key]["distance"];
+                $result[$key] = $model;
+
+                //$result[$key]["distance"] = $dist;
+            }
+        }
+        return $result;
     }
 
 }

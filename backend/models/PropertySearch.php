@@ -42,7 +42,7 @@ class PropertySearch extends Property
      */
     public function search($params)
     {
-
+        
         $query = Property::find();
 
         // add conditions that should always apply here
@@ -61,12 +61,14 @@ class PropertySearch extends Property
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
+        /*$query->andFilterWhere([
             'id_property' => $this->id_property,
             'id_neighborhood' => $this->id_neighborhood,
             'id_client' => $this->id_client,
             'id_property_type' => $this->id_property_type,
-        ]);
+        ]);*/
+
+        //var_dump($query);die;
 
         if(isset($params['bathrooms'])) $query->andFilterWhere(['=', 'bathrooms', $params['bathrooms']]);
         if(isset($params['bedrooms'])) 
@@ -80,6 +82,27 @@ class PropertySearch extends Property
                 $query->andFilterWhere(['=', 'bedrooms', $params['bedrooms']]);
             }
         } 
+
+        //var_dump($params);die;
+
+        if(isset($params['PropertySearch']))
+        {
+            if(isset($params['PropertySearch']['id_property'])) 
+                $query->andFilterWhere(['=', 'id_property', $params['PropertySearch']['id_property']]);
+            if(isset($params['PropertySearch']['id_neighborhood'])) 
+                $query->andFilterWhere(['=', 'id_neighborhood', $params['PropertySearch']['id_neighborhood']]);
+            if(isset($params['PropertySearch']['id_client'])) 
+                $query->andFilterWhere(['=', 'id_client', $params['PropertySearch']['id_client']]);
+            if(isset($params['PropertySearch']['id_property_type'])) 
+                $query->andFilterWhere(['=', 'id_property_type', $params['PropertySearch']['id_property_type']]);
+            if(isset($params['PropertySearch']['title'])) 
+                $query->andFilterWhere(['like', 'title', $params['PropertySearch']['title']]);
+            if(isset($params['PropertySearch']['short_description'])) 
+                $query->andFilterWhere(['like', 'short_description', $params['PropertySearch']['short_description']]);
+            if(isset($params['PropertySearch']['address'])) 
+                $query->andFilterWhere(['like', 'address', $params['PropertySearch']['address']]);
+        }
+
         if(isset($params['laundry'])) $query->andFilterWhere(['=', 'laundry', $params['laundry']]);
         if(isset($params['barbacoa'])) $query->andFilterWhere(['=', 'barbacoa', $params['barbacoa']]);
         if(isset($params['garage'])) $query->andFilterWhere(['=', 'garage', $params['garage']]);
@@ -108,8 +131,15 @@ class PropertySearch extends Property
 
             //var_dump($lat.' '.$lng.' '.$distance);die;
             $connection = Yii::$app->getDb();
+            /*$command = $connection->createCommand('
+            SELECT id_property, title, bedrooms, bathrooms, total_surface, short_description, latitude, longitude, (6371 * acos(cos(radians('.$lat.')) * cos(radians( latitude ) ) 
+                        * cos( radians( longitude ) - radians('.$lng.') ) + sin( radians('.$lat.') ) * sin(radians(latitude)) ) ) AS distance 
+                        FROM property 
+                        HAVING distance < '.$distance.' 
+                        ORDER BY distance 
+                        LIMIT 0 , 20;');*/
             $command = $connection->createCommand('
-            SELECT id_property, title, latitude, longitude, (6371 * acos(cos(radians('.$lat.')) * cos(radians( latitude ) ) 
+            SELECT id_property, (6371 * acos(cos(radians('.$lat.')) * cos(radians( latitude ) ) 
                         * cos( radians( longitude ) - radians('.$lng.') ) + sin( radians('.$lat.') ) * sin(radians(latitude)) ) ) AS distance 
                         FROM property 
                         HAVING distance < '.$distance.' 
