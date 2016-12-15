@@ -133,7 +133,7 @@ class PropertySearch extends Property
         if(isset($params['guesthouse'])) $query->andFilterWhere(['=', 'guesthouse', $params['guesthouse']]);
         if(isset($params['id_client_type'])) $query->joinWith(['idClient'])->where(['=', 'id_client_type', $params['id_client_type']]);
         if(isset($params['id_condition'])) $query->joinWith(['idConditions'])->where(['=', 'id_condition', $params['id_condition']]);
-        if(isset($params['id_operation_type'])) $query->joinWith(['propertyPrices'])->where(['=', 'id_operation', $params['id_operation_type']]);
+        //if(isset($params['id_operation_type'])) $query->joinWith(['propertyPrices'])->where(['=', 'id_operation', $params['id_operation_type']]);
 
 
         /*$query->andFilterWhere(['like', 'title', $this->title])
@@ -211,10 +211,10 @@ class PropertySearch extends Property
             $range = explode(';', $params['price_range']);
             $price_from = $range[0];
             $price_to = $range[1];
-            $query->joinWith(['propertyPrices'])->where(['>=', 'price', $price_from]);
-            $query->joinWith(['propertyPrices'])->where(['<=', 'price', $price_to]);
-            $query->joinWith(['propertyPrices'])->where(['=', 'id_currency', $params['id_currency']]);
-            $query->joinWith(['propertyPrices'])->where(['=', 'id_operation', $params['id_operation_type']]);
+            $query->joinWith(['propertyPrices'])->andFilterWhere(['>=', 'price', $price_from]);
+            $query->joinWith(['propertyPrices'])->andFilterWhere(['<=', 'price', $price_to]);
+            $query->joinWith(['propertyPrices'])->andFilterWhere(['=', 'id_currency', $params['id_currency']]);
+            $query->joinWith(['propertyPrices'])->andFilterWhere(['=', 'id_operation', $params['id_operation_type']]);
         }
 
 
