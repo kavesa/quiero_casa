@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\ConditionStatus */
 
-$this->title = 'Update Condition Status: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Condition Statuses', 'url' => ['index']];
+$this->title = 'Actualizar Condición: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Condiciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="condition-status-update">
 
