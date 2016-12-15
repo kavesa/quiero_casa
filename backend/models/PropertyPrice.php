@@ -56,10 +56,20 @@ class PropertyPrice extends \yii\db\ActiveRecord
 
     public function fields()
     {
-        return [
+        /*return [
             'id_property' => function($model) {
                 return $model->idProperty;
             },
+            'operation' => function($model) {
+                return $model->idOperation->type;
+            },
+            'currency' => function($model) {
+                return $model->idCurrency->name;
+            },
+            'price',
+        ];*/
+        return [
+            'id_property',
             'operation' => function($model) {
                 return $model->idOperation->type;
             },
