@@ -65,10 +65,16 @@ class FavoriteController extends ActiveController
 
     public function actionDelete($id)
     {
-        $ids = explode(",", $id);
-        $id_user = $ids[0];
-        $id_property = $ids[1];
-        Favorite::findOne($id_user, $id_property)->delete();
+        $user = \Yii::$app->user->identity;
+        //$ids = explode(",", $id);
+        $id_user = $user->id;
+        $id_property = $id;
+        if($favorite = Favorite::findOne($id_user, $id_property)) 
+        {
+            $favorite->delete();
+        } else {
+            return null;
+        }
     }
 
     public function actionCreate()
@@ -101,22 +107,11 @@ class FavoriteController extends ActiveController
             	if($result[$key]["id_user"] != $user->id) {
             		unset($result[$key]);
             	} else {
-                    //$result[$key] = $result[$key]['property'];
-
+                    $result[$key] = $result[$key]['property'];
                 }
             }
-            $result = ArrayHelper::index($result, 'id_user');
-
-            foreach ($result as $key => $value) {
-                $result[$key] = $result[$key]['property'];
-            }
-            /*foreach ($result as $key => $value) {
-            	$model = Property::findOne($result[$key]["id_property"]);
-            	$result[$key]["property"] = $model;
-            }*/
+            $result = array_values($result);
         }
-        
-        //var_dump($result);die;
 	    return $result;
 	}
 }
