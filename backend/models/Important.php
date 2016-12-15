@@ -44,9 +44,9 @@ class Important extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_property' => 'Id Property',
-            'start_date' => 'Start Date',
-            'end_date' => 'End Date',
+            'id_property' => 'Propiedad',
+            'start_date' => 'Fecha de inicio',
+            'end_date' => 'Fecha de fin',
         ];
     }
 

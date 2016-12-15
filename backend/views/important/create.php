@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Important */
 
-$this->title = 'Create Important';
-$this->params['breadcrumbs'][] = ['label' => 'Importants', 'url' => ['index']];
+$this->title = 'Crear Destacado';
+$this->params['breadcrumbs'][] = ['label' => 'Destacados', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="important-create">

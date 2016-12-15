@@ -95,12 +95,33 @@ class PropertySearch extends Property
                 $query->andFilterWhere(['=', 'id_client', $params['PropertySearch']['id_client']]);
             if(isset($params['PropertySearch']['id_property_type'])) 
                 $query->andFilterWhere(['=', 'id_property_type', $params['PropertySearch']['id_property_type']]);
+
+            //var_dump($query);die;
+
             if(isset($params['PropertySearch']['title'])) 
                 $query->andFilterWhere(['like', 'title', $params['PropertySearch']['title']]);
             if(isset($params['PropertySearch']['short_description'])) 
                 $query->andFilterWhere(['like', 'short_description', $params['PropertySearch']['short_description']]);
             if(isset($params['PropertySearch']['address'])) 
                 $query->andFilterWhere(['like', 'address', $params['PropertySearch']['address']]);
+        } else {
+            if(isset($params['id_property'])) 
+                $query->andFilterWhere(['=', 'id_property', $params['id_property']]);
+            if(isset($params['id_neighborhood'])) 
+                $query->andFilterWhere(['=', 'id_neighborhood', $params['id_neighborhood']]);
+            if(isset($params['id_client'])) 
+                $query->andFilterWhere(['=', 'id_client', $params['id_client']]);
+            if(isset($params['id_property_type'])) 
+                $query->andFilterWhere(['=', 'id_property_type', $params['id_property_type']]);
+
+            //var_dump($query);die;
+
+            if(isset($params['title'])) 
+                $query->andFilterWhere(['like', 'title', $params['title']]);
+            if(isset($params['short_description'])) 
+                $query->andFilterWhere(['like', 'short_description', $params['short_description']]);
+            if(isset($params['address'])) 
+                $query->andFilterWhere(['like', 'address', $params['address']]);
         }
 
         if(isset($params['laundry'])) $query->andFilterWhere(['=', 'laundry', $params['laundry']]);
@@ -113,6 +134,7 @@ class PropertySearch extends Property
         if(isset($params['id_client_type'])) $query->joinWith(['idClient'])->where(['=', 'id_client_type', $params['id_client_type']]);
         if(isset($params['id_condition'])) $query->joinWith(['idConditions'])->where(['=', 'id_condition', $params['id_condition']]);
         if(isset($params['id_operation_type'])) $query->joinWith(['propertyPrices'])->where(['=', 'id_operation', $params['id_operation_type']]);
+
 
         /*$query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'short_description', $this->short_description])
@@ -164,7 +186,7 @@ class PropertySearch extends Property
         }
         else
         {
-            $query->andFilterWhere(['total_surface' => $this->total_surface]);
+            //$query->andFilterWhere(['total_surface' => $this->total_surface]);
         }
 
         //búsqueda por constructed surface range
@@ -179,7 +201,7 @@ class PropertySearch extends Property
         }
         else
         {
-            $query->andFilterWhere(['constructed_surface' => $this->constructed_surface]);
+            //$query->andFilterWhere(['constructed_surface' => $this->constructed_surface]);
         }
 
         //búsqueda por price range
@@ -205,6 +227,8 @@ class PropertySearch extends Property
         {
             $query->offset($params['offset']);
         }
+
+        //var_dump($query);die;
 
         return $dataProvider;
     }

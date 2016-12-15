@@ -25,6 +25,8 @@
 
                     
                     ['label' => 'Tipos de Propiedades', 'icon' => 'fa fa-square', 'url' => ['/property-type']],
+                    
+                    ['label' => 'Destacadas', 'icon' => 'fa fa-flag', 'url' => ['/important']],
                     ['label' => 'Departamento', 'icon' => 'fa fa-leaf', 'url' => ['/state']],
                     
                     ['label' => 'Barrio', 'icon' => 'fa fa-bank', 'url' => ['/neighbourhood']],
