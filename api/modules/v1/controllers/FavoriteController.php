@@ -8,6 +8,7 @@ use backend\models\Property;
 use backend\models\FavoriteSearch;
 use backend\models\Favorite;
 use yii\helpers\ArrayHelper;
+use yii\web\NotFoundHttpException;
 
 class FavoriteController extends ActiveController
 {
@@ -69,11 +70,11 @@ class FavoriteController extends ActiveController
         //$ids = explode(",", $id);
         $id_user = $user->id;
         $id_property = $id;
-        if($favorite = Favorite::findOne($id_user, $id_property)) 
+        if($favorite = Favorite::findOne(['id_user' => $id_user, 'id_property' => $id_property])) 
         {
             $favorite->delete();
         } else {
-            return null;
+            throw new NotFoundHttpException();
         }
     }
 
