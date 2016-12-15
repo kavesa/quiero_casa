@@ -94,6 +94,7 @@ class UserController extends ActiveController
 
                 $response->data = ['message' => 'User confirmed.'];
                 $response->statusCode = 200;
+                $response->redirect('http://localhost/QuieroCasa_FO/index.html');
             }
             else
             {
