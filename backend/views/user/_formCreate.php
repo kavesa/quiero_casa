@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 	<?= $form->field($model, 'password')->passwordInput() ?>    
 
     <div class="form-group">
-        <?= Html::submitButton(true ? 'Create' : 'Update', ['class' => true ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton(true ? 'Crear' : 'Actualizar', ['class' => true ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

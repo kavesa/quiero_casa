@@ -47,9 +47,9 @@ class PropertyPrice extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_property' => 'Id Property',
-            'id_operation' => 'Id Operation',
-            'id_currency' => 'Id Currency',
+            'id_property' => 'Propiedad',
+            'id_operation' => 'Operación',
+            'id_currency' => 'Moneda',
             'price' => 'Price',
         ];
     }
@@ -57,7 +57,9 @@ class PropertyPrice extends \yii\db\ActiveRecord
     public function fields()
     {
         return [
-            'id_property',
+            'id_property' => function($model) {
+                return $model->idProperty;
+            },
             'operation' => function($model) {
                 return $model->idOperation->type;
             },

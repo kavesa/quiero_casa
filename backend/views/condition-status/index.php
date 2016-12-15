@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\ConditionStatusSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Condition Statuses';
+$this->title = 'Condiciones';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="condition-status-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Condition Status', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Condiciones', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

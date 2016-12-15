@@ -33,6 +33,21 @@
                     ['label' => 'Tipo de Clientes', 'icon' => 'fa fa-user', 'url' => ['/client-type']],
                     ['label' => 'Monedas', 'icon' => 'fa fa-circle', 'url' => ['/currency']],
                     ['label' => 'Tipos de operación', 'icon' => 'fa fa-flag', 'url' => ['/operation-type']],
+                    ['label' => 'Condiciones', 'icon' => 'fa fa-flag', 'url' => ['/condition-status']],
+
+                    Yii::$app->user->can('admin') ?
+                    [
+                        'label' => 'Administración',
+                        'icon' => 'fa fa-share',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Usuarios', 'icon' => 'fa fa-user', 'url' => ['/user'],],
+                            ['label' => 'Asignar permisos', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/assignment'],],
+                            ['label' => 'Administrar Roles', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/role'],],
+                        ],
+                    ]
+                    : [],
+                    
                 ],
             ]
         ) ?>
